@@ -14,6 +14,18 @@ namespace ConversionLib
             {
                 return value?.ConvertType(type.GenericTypeArguments[0]);
             }
+            if (type.IsEnum)
+            {
+                if (value == null) throw new InvalidCastException("The null value can not be converted to a value type.");
+
+                return Enum.Parse(type, value.ToString());
+            }
+            if (type == typeof(TimeSpan))
+            {
+                if (value == null) throw new InvalidCastException("The null value can not be converted to a value type.");
+
+                return TimeSpan.Parse(value.ToString());
+            }
             return Convert.ChangeType(value, type);
         }
     }
