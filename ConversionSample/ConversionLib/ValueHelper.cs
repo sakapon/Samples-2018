@@ -26,6 +26,12 @@ namespace ConversionLib
 
                 return TimeSpan.Parse(value.ToString());
             }
+            if (type == typeof(DateTimeOffset))
+            {
+                if (value == null) throw new InvalidCastException("The null value can not be converted to a value type.");
+
+                return DateTimeOffset.Parse(value.ToString());
+            }
             return Convert.ChangeType(value, type);
         }
     }

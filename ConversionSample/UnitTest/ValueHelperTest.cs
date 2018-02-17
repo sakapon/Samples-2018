@@ -20,7 +20,9 @@ namespace UnitTest
             Assert.AreEqual('A', 65.To<char>());
             Assert.AreEqual('A', "A".To<char>());
             Assert.AreEqual(new DateTime(2000, 1, 1, 10, 11, 12), "2000-01-01 10:11:12".To<DateTime>());
+            Assert.AreEqual(TimeSpan.FromDays(123), 123.To<TimeSpan>());
             Assert.AreEqual(new TimeSpan(1, 2, 30, 40), "1.02:30:40".To<TimeSpan>());
+            Assert.AreEqual(new DateTimeOffset(new DateTime(2000, 1, 1, 10, 11, 12), TimeSpan.FromHours(9)), "2000-01-01 10:11:12 +09:00".To<DateTimeOffset>());
             Assert.AreEqual(ConsoleColor.Cyan, "cyan".To<ConsoleColor>());
             Assert.AreEqual(ConsoleColor.Cyan, 11.To<ConsoleColor>());
             Assert.AreEqual(ConsoleColor.Cyan, "11".To<ConsoleColor>());
@@ -29,6 +31,7 @@ namespace UnitTest
         [TestMethod]
         public void To_Nullable()
         {
+            Assert.AreEqual(null, ((string)null).To<bool?>());
             Assert.AreEqual(false, "False".To<bool?>());
             Assert.AreEqual(123, "123".To<int?>());
             Assert.AreEqual(123.456, "123.456".To<double?>());
