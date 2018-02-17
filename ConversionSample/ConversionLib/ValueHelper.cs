@@ -18,7 +18,7 @@ namespace ConversionLib
             {
                 if (value == null) throw new InvalidCastException("The null value can not be converted to a value type.");
 
-                return Enum.Parse(type, value.ToString());
+                return Enum.Parse(type, value.ToString(), true);
             }
             if (type == typeof(TimeSpan))
             {
