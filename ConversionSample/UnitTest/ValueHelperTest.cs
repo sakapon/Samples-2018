@@ -1,14 +1,16 @@
 ﻿using System;
+using ConversionLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public class ValueHelperTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void To_1()
         {
+            Assert.AreEqual(123, "123".To<int>());
         }
     }
 }
