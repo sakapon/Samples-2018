@@ -10,7 +10,7 @@ namespace ConversionLib
 
         public static object ConvertType(this object value, Type type)
         {
-            if (type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 return value?.ConvertType(type.GenericTypeArguments[0]);
             }
