@@ -7,33 +7,92 @@ using System.Web.Http;
 
 namespace SampleWebApi.Controllers
 {
+    /// <summary>
+    /// Generates random data.
+    /// </summary>
+    [RoutePrefix("api")]
+    [Route("{action}")]
     public class RandomController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        static readonly Random random = new Random();
+
+        /// <summary>
+        /// Creates a new integer.
+        /// </summary>
+        /// <param name="minValue">The minimum value.</param>
+        /// <param name="maxValue">The maximum value.</param>
+        /// <returns>A new integer.</returns>
+        [HttpGet]
+        [ActionName("NewInteger")]
+        public int NewInteger1(int minValue, int maxValue)
         {
-            return new string[] { "value1", "value2" };
+            return random.Next(minValue, maxValue);
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        /// <summary>
+        /// Creates a new integer.
+        /// </summary>
+        /// <param name="range">The range info.</param>
+        /// <returns>A new integer.</returns>
+        [HttpPost]
+        [ActionName("NewInteger")]
+        public int NewInteger2([FromBody]RangeInfo range)
         {
-            return "value";
+            return random.Next(range.MinValue, range.MaxValue);
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// Creates a new double values with the specified count.
+        /// </summary>
+        /// <param name="count">The count of the result.</param>
+        /// <returns>A new double values.</returns>
+        [HttpGet]
+        [Route("NewDoubles/{count:int:range(0,64)}")]
+        public double[] NewDoubles(int count)
         {
+            return Enumerable.Range(0, count)
+                .Select(i => random.NextDouble())
+                .ToArray();
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        /// <summary>
+        /// Creates a new UUID (GUID).
+        /// </summary>
+        /// <returns>A new UUID (GUID).</returns>
+        [HttpGet]
+        public Guid NewUuid()
         {
+            return Guid.NewGuid();
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        /// <summary>
+        /// Creates a new UUID info.
+        /// </summary>
+        /// <returns>A new UUID info.</returns>
+        [HttpGet]
+        public UuidInfo NewUuidInfo()
         {
+            return new UuidInfo { Id = Guid.NewGuid(), Date = DateTime.Now };
         }
+    }
+
+    /// <summary>The range info.</summary>
+    public struct RangeInfo
+    {
+        /// <summary>The minimum value.</summary>
+        public int MinValue { get; set; }
+
+        /// <summary>The maximum value.</summary>
+        public int MaxValue { get; set; }
+    }
+
+    /// <summary>The UUID info.</summary>
+    public struct UuidInfo
+    {
+        /// <summary>The ID.</summary>
+        public Guid Id { get; set; }
+
+        /// <summary>The date.</summary>
+        public DateTime Date { get; set; }
     }
 }
