@@ -42,10 +42,10 @@ namespace SampleWebApi.Controllers
         }
 
         /// <summary>
-        /// Creates a new double values with the specified count.
+        /// Creates new double values with the specified count.
         /// </summary>
         /// <param name="count">The count of the result.</param>
-        /// <returns>A new double values.</returns>
+        /// <returns>New double values.</returns>
         [HttpGet]
         [Route("NewDoubles/{count:int:range(0,64)}")]
         public double[] NewDoubles(int count)
