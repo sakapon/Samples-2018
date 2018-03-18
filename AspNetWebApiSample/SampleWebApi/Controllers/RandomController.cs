@@ -17,6 +17,15 @@ namespace SampleWebApi.Controllers
         static readonly Random random = new Random();
 
         /// <summary>
+        /// Echo the specified value.
+        /// </summary>
+        /// <param name="i">A value.</param>
+        /// <returns>The value.</returns>
+        [HttpGet]
+        [Route("Echo/{i:int?}")]
+        public int Echo(int i = 123) => i;
+
+        /// <summary>
         /// Creates a new integer.
         /// </summary>
         /// <param name="minValue">The minimum value.</param>
