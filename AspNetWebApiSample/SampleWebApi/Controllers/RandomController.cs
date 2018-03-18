@@ -56,6 +56,19 @@ namespace SampleWebApi.Controllers
         }
 
         /// <summary>
+        /// Creates a new datetime on the specified date.
+        /// </summary>
+        /// <param name="date">The date, which formats are "yyyy-mm-dd" or "yyyy/mm/dd".</param>
+        /// <returns>A new datetime.</returns>
+        [HttpGet]
+        [Route(@"NewDateTime/{date:datetime:regex(\d{4}-\d{2}-\d{2})}")]
+        [Route(@"NewDateTime/{*date:datetime:regex(\d{4}/\d{2}/\d{2})}")]
+        public DateTime NewDateTime(DateTime date)
+        {
+            return date + TimeSpan.FromHours(24 * random.NextDouble());
+        }
+
+        /// <summary>
         /// Creates a new UUID (GUID).
         /// </summary>
         /// <returns>A new UUID (GUID).</returns>
