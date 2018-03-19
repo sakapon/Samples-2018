@@ -18,7 +18,15 @@ namespace UnitTest.Client
         }
 
         [TestMethod]
-        async public Task Get()
+        async public Task Get_1()
+        {
+            var result = await HttpHelper.GetAsync<string>("api/values/1");
+
+            Assert.AreEqual("value1", result);
+        }
+
+        [TestMethod]
+        async public Task Get_2()
         {
             var result = await HttpHelper.GetAsync<string>("api/values", new Dictionary<string, object> { { "id", 1 } });
 

@@ -7,6 +7,9 @@ using System.Web.Http;
 
 namespace SampleWebApi.Controllers
 {
+    /// <summary>
+    /// Represents string data.
+    /// </summary>
     public class ValuesController : ApiController
     {
         static readonly List<string> values = new List<string> { "value0", "value1" };
