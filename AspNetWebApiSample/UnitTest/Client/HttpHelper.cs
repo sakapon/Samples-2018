@@ -15,6 +15,7 @@ namespace UnitTest.Client
             using (var http = new HttpClient { BaseAddress = BaseUri })
             {
                 var response = await http.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsAsync<T>();
             }
         }
@@ -28,6 +29,39 @@ namespace UnitTest.Client
             {
                 var query = await content.ReadAsStringAsync();
                 return await GetAsync<T>($"{uri}?{query}");
+            }
+        }
+
+        public static Task<T> PostAsFormAsync<T>(string uri, Dictionary<string, object> parameters) =>
+            PostAsFormAsync<T>(uri, parameters.ToDictionary(p => p.Key, p => p.Value?.ToString()));
+
+        async public static Task<T> PostAsFormAsync<T>(string uri, Dictionary<string, string> parameters)
+        {
+            using (var http = new HttpClient { BaseAddress = BaseUri })
+            using (var content = new FormUrlEncodedContent(parameters))
+            {
+                var response = await http.PostAsync(uri, content);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsAsync<T>();
+            }
+        }
+
+        async public static Task PostAsJsonAsync<T>(string uri, T value)
+        {
+            using (var http = new HttpClient { BaseAddress = BaseUri })
+            {
+                var response = await http.PostAsJsonAsync(uri, value);
+                response.EnsureSuccessStatusCode();
+            }
+        }
+
+        async public static Task<TResult> PostAsJsonAsync<T, TResult>(string uri, T value)
+        {
+            using (var http = new HttpClient { BaseAddress = BaseUri })
+            {
+                var response = await http.PostAsJsonAsync(uri, value);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsAsync<TResult>();
             }
         }
     }
