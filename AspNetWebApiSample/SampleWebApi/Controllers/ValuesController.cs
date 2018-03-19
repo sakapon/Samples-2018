@@ -9,6 +9,8 @@ namespace SampleWebApi.Controllers
 {
     public class ValuesController : ApiController
     {
+        static readonly List<string> values = new List<string> { "value0", "value1" };
+
         /// <summary>
         /// Gets all values.
         /// </summary>
@@ -16,7 +18,7 @@ namespace SampleWebApi.Controllers
         /// <remarks>GET api/values</remarks>
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return values;
         }
 
         /// <summary>
@@ -27,7 +29,12 @@ namespace SampleWebApi.Controllers
         /// <remarks>GET api/values/5</remarks>
         public string Get(int id)
         {
-            return "value";
+            if (id < 0 || values.Count <= id)
+            {
+                var response = Request.CreateErrorResponse(HttpStatusCode.NotFound, $"No value with ID = {id}");
+                throw new HttpResponseException(response);
+            }
+            return values[id];
         }
 
         /// <summary>
