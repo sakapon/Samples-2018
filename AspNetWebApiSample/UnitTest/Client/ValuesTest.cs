@@ -15,16 +15,16 @@ namespace UnitTest.Client
 
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Length);
-            Assert.AreEqual("value1", result[0]);
-            Assert.AreEqual("value2", result[1]);
+            Assert.AreEqual("value0", result[0]);
+            Assert.AreEqual("value1", result[1]);
         }
 
         [TestMethod]
         async public Task Get()
         {
-            var result = await HttpHelper.GetAsync<string>("api/values", new Dictionary<string, object> { { "id", 5 } });
+            var result = await HttpHelper.GetAsync<string>("api/values", new Dictionary<string, object> { { "id", 1 } });
 
-            Assert.AreEqual("value", result);
+            Assert.AreEqual("value1", result);
         }
     }
 }

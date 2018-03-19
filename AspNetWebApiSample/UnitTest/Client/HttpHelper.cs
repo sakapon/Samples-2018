@@ -19,17 +19,15 @@ namespace UnitTest.Client
             }
         }
 
-        async public static Task<T> GetAsync<T>(string uri, Dictionary<string, object> parameters) =>
-            await GetAsync<T>(uri, parameters.ToDictionary(p => p.Key, p => p.Value?.ToString()));
+        public static Task<T> GetAsync<T>(string uri, Dictionary<string, object> parameters) =>
+            GetAsync<T>(uri, parameters.ToDictionary(p => p.Key, p => p.Value?.ToString()));
 
         async public static Task<T> GetAsync<T>(string uri, Dictionary<string, string> parameters)
         {
-            using (var http = new HttpClient { BaseAddress = BaseUri })
             using (var content = new FormUrlEncodedContent(parameters))
             {
                 var query = await content.ReadAsStringAsync();
-                var response = await http.GetAsync($"{uri}?{query}");
-                return await response.Content.ReadAsAsync<T>();
+                return await GetAsync<T>($"{uri}?{query}");
             }
         }
     }

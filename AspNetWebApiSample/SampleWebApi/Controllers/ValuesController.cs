@@ -33,6 +33,9 @@ namespace SampleWebApi.Controllers
             {
                 var response = Request.CreateErrorResponse(HttpStatusCode.NotFound, $"No value with ID = {id}");
                 throw new HttpResponseException(response);
+
+                // No content:
+                //throw new HttpResponseException(HttpStatusCode.NotFound);
             }
             return values[id];
         }
