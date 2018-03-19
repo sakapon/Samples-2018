@@ -14,7 +14,6 @@ namespace SampleWebApi.Controllers
     /// Generates random text.
     /// </summary>
     [RoutePrefix("api")]
-    [Route("{action}")]
     public class RandomTextController : ApiController
     {
         static readonly Random random = new Random();

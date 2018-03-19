@@ -10,7 +10,7 @@ namespace SampleWebApi.Controllers
     /// <summary>
     /// Generates random data.
     /// </summary>
-    [RoutePrefix("api")]
+    [RoutePrefix("api/Random")]
     [Route("{action}")]
     public class RandomController : ApiController
     {
