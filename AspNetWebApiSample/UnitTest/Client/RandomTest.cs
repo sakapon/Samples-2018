@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,6 +16,30 @@ namespace UnitTest.Client
             var result = await HttpHelper.GetAsync<int>("api/Random/Echo/321");
 
             Assert.AreEqual(321, result);
+        }
+
+        [TestMethod]
+        async public Task NewInteger1()
+        {
+            var result = await HttpHelper.GetAsync<int>("api/Random/NewInteger", new Dictionary<string, object> { { "minValue", 5 }, { "maxValue", 10 } });
+
+            Assert.IsTrue(5 <= result && result < 10);
+        }
+
+        [TestMethod]
+        async public Task NewInteger2_Form()
+        {
+            var result = await HttpHelper.PostAsFormAsync<int>("api/Random/NewInteger", new Dictionary<string, object> { { "minValue", 5 }, { "maxValue", 10 } });
+
+            Assert.IsTrue(5 <= result && result < 10);
+        }
+
+        [TestMethod]
+        async public Task NewInteger2_Json()
+        {
+            var result = await HttpHelper.PostAsJsonAsync<RangeInfo, int>("api/Random/NewInteger", new RangeInfo { MinValue = 5, MaxValue = 10 });
+
+            Assert.IsTrue(5 <= result && result < 10);
         }
 
         [TestMethod]
