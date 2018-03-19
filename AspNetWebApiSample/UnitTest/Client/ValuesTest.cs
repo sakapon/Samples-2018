@@ -13,10 +13,8 @@ namespace UnitTest.Client
         {
             var result = await HttpHelper.GetAsync<string[]>("api/values");
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Length);
-            Assert.AreEqual("value0", result[0]);
-            Assert.AreEqual("value1", result[1]);
+            var expected = new[] { "value0", "value1" };
+            CollectionAssert.AreEqual(expected, result);
         }
 
         [TestMethod]
