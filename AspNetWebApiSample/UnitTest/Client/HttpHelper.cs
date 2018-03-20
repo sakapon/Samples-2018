@@ -64,5 +64,43 @@ namespace UnitTest.Client
                 return await response.Content.ReadAsAsync<TResult>();
             }
         }
+
+        async public static Task PutAsJsonAsync(string uri, object value)
+        {
+            using (var http = new HttpClient { BaseAddress = BaseUri })
+            {
+                var response = await http.PutAsJsonAsync(uri, value);
+                response.EnsureSuccessStatusCode();
+            }
+        }
+
+        async public static Task<TResult> PutAsJsonAsync<TResult>(string uri, object value)
+        {
+            using (var http = new HttpClient { BaseAddress = BaseUri })
+            {
+                var response = await http.PutAsJsonAsync(uri, value);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsAsync<TResult>();
+            }
+        }
+
+        async public static Task DeleteAsync(string uri)
+        {
+            using (var http = new HttpClient { BaseAddress = BaseUri })
+            {
+                var response = await http.DeleteAsync(uri);
+                response.EnsureSuccessStatusCode();
+            }
+        }
+
+        async public static Task<TResult> DeleteAsync<TResult>(string uri)
+        {
+            using (var http = new HttpClient { BaseAddress = BaseUri })
+            {
+                var response = await http.DeleteAsync(uri);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsAsync<TResult>();
+            }
+        }
     }
 }
