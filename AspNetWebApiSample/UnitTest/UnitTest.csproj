@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client\HttpHelper.cs" />
+    <Compile Include="Client\PeopleTest.cs" />
     <Compile Include="Client\RandomTest.cs" />
     <Compile Include="Client\RandomTextTest.cs" />
     <Compile Include="Client\ValuesTest.cs" />
