@@ -37,7 +37,7 @@ namespace UnitTest.Client
         [TestMethod]
         async public Task NewInteger2_Json()
         {
-            var result = await HttpHelper.PostAsJsonAsync<RangeInfo, int>("api/Random/NewInteger", new RangeInfo { MinValue = 5, MaxValue = 10 });
+            var result = await HttpHelper.PostAsJsonAsync<int>("api/Random/NewInteger", new RangeInfo { MinValue = 5, MaxValue = 10 });
 
             Assert.IsTrue(5 <= result && result < 10);
         }

@@ -46,7 +46,7 @@ namespace UnitTest.Client
             }
         }
 
-        async public static Task PostAsJsonAsync<T>(string uri, T value)
+        async public static Task PostAsJsonAsync(string uri, object value)
         {
             using (var http = new HttpClient { BaseAddress = BaseUri })
             {
@@ -55,7 +55,7 @@ namespace UnitTest.Client
             }
         }
 
-        async public static Task<TResult> PostAsJsonAsync<T, TResult>(string uri, T value)
+        async public static Task<TResult> PostAsJsonAsync<TResult>(string uri, object value)
         {
             using (var http = new HttpClient { BaseAddress = BaseUri })
             {
