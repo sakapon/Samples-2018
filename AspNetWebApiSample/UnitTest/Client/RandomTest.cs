@@ -21,7 +21,7 @@ namespace UnitTest.Client
         [TestMethod]
         async public Task NewInteger1()
         {
-            var result = await HttpHelper.GetAsync<int>("api/Random/NewInteger", new Dictionary<string, object> { { "minValue", 5 }, { "maxValue", 10 } });
+            var result = await HttpHelper.GetAsync<int>("api/Random/NewInteger", new RangeInfo { MinValue = 5, MaxValue = 10 });
 
             Assert.IsTrue(5 <= result && result < 10);
         }
