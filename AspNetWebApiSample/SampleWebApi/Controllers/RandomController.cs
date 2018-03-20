@@ -45,7 +45,7 @@ namespace SampleWebApi.Controllers
         /// <returns>A new integer.</returns>
         [HttpPost]
         [ActionName("NewInteger")]
-        public int NewInteger2([FromBody]RangeInfo range)
+        public int NewInteger2(RangeInfo range)
         {
             return random.Next(range.MinValue, range.MaxValue);
         }
