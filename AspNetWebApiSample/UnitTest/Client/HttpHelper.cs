@@ -24,15 +24,20 @@ namespace UnitTest.Client
         public static Task<T> GetAsync<T>(string uri, object query) =>
             GetAsync<T>(AddQuery(uri, query));
 
-        public static Task<T> PostAsFormAsync<T>(string uri, Dictionary<string, object> parameters) =>
-            PostAsFormAsync<T>(uri, parameters.ToDictionary(p => p.Key, p => p.Value?.ToString()));
-
-        async public static Task<T> PostAsFormAsync<T>(string uri, Dictionary<string, string> parameters)
+        async public static Task PostAsFormAsync(string uri, object value)
         {
             using (var http = new HttpClient { BaseAddress = BaseUri })
-            using (var content = new FormUrlEncodedContent(parameters))
             {
-                var response = await http.PostAsync(uri, content);
+                var response = await http.PostAsync(uri, new FormUrlEncodedContent(value.EnumerateProperties()));
+                response.EnsureSuccessStatusCode();
+            }
+        }
+
+        async public static Task<T> PostAsFormAsync<T>(string uri, object value)
+        {
+            using (var http = new HttpClient { BaseAddress = BaseUri })
+            {
+                var response = await http.PostAsync(uri, new FormUrlEncodedContent(value.EnumerateProperties()));
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsAsync<T>();
             }
@@ -47,13 +52,13 @@ namespace UnitTest.Client
             }
         }
 
-        async public static Task<TResult> PostAsJsonAsync<TResult>(string uri, object value)
+        async public static Task<T> PostAsJsonAsync<T>(string uri, object value)
         {
             using (var http = new HttpClient { BaseAddress = BaseUri })
             {
                 var response = await http.PostAsJsonAsync(uri, value);
                 response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsAsync<TResult>();
+                return await response.Content.ReadAsAsync<T>();
             }
         }
 
@@ -66,13 +71,13 @@ namespace UnitTest.Client
             }
         }
 
-        async public static Task<TResult> PutAsJsonAsync<TResult>(string uri, object value)
+        async public static Task<T> PutAsJsonAsync<T>(string uri, object value)
         {
             using (var http = new HttpClient { BaseAddress = BaseUri })
             {
                 var response = await http.PutAsJsonAsync(uri, value);
                 response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsAsync<TResult>();
+                return await response.Content.ReadAsAsync<T>();
             }
         }
 
@@ -85,13 +90,13 @@ namespace UnitTest.Client
             }
         }
 
-        async public static Task<TResult> DeleteAsync<TResult>(string uri)
+        async public static Task<T> DeleteAsync<T>(string uri)
         {
             using (var http = new HttpClient { BaseAddress = BaseUri })
             {
                 var response = await http.DeleteAsync(uri);
                 response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsAsync<TResult>();
+                return await response.Content.ReadAsAsync<T>();
             }
         }
 
@@ -99,12 +104,13 @@ namespace UnitTest.Client
 
         public static string ToFormUrlEncoded(this object value)
         {
-            var properties = TypeDescriptor.GetProperties(value)
-                .Cast<PropertyDescriptor>()
-                .Select(d => new KeyValuePair<string, string>(d.Name, d.GetValue(value)?.ToString()));
-
-            using (var content = new FormUrlEncodedContent(properties))
+            using (var content = new FormUrlEncodedContent(value.EnumerateProperties()))
                 return content.ReadAsStringAsync().GetAwaiter().GetResult();
         }
+
+        public static IEnumerable<KeyValuePair<string, string>> EnumerateProperties(this object value) =>
+             TypeDescriptor.GetProperties(value)
+                .Cast<PropertyDescriptor>()
+                .Select(d => new KeyValuePair<string, string>(d.Name, d.GetValue(value)?.ToString()));
     }
 }

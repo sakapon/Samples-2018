@@ -29,7 +29,7 @@ namespace UnitTest.Client
         [TestMethod]
         async public Task NewInteger2_Form()
         {
-            var result = await HttpHelper.PostAsFormAsync<int>("api/Random/NewInteger", new Dictionary<string, object> { { "minValue", 5 }, { "maxValue", 10 } });
+            var result = await HttpHelper.PostAsFormAsync<int>("api/Random/NewInteger", new RangeInfo { MinValue = 5, MaxValue = 10 });
 
             Assert.IsTrue(5 <= result && result < 10);
         }
