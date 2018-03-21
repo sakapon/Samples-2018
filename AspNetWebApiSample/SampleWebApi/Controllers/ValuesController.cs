@@ -34,8 +34,8 @@ namespace SampleWebApi.Controllers
         {
             if (id < 0 || values.Count <= id)
             {
-                var response = Request.CreateErrorResponse(HttpStatusCode.NotFound, $"No value with ID = {id}");
-                throw new HttpResponseException(response);
+                var message = $"No value with ID = {id}";
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
 
                 // No content:
                 //throw new HttpResponseException(HttpStatusCode.NotFound);
