@@ -16,6 +16,10 @@ namespace SampleWebApi.Areas.HelpPage
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
+                "HelpPage_Root",
+                "",
+                new { controller = "Help", action = "Index" });
+            context.MapRoute(
                 "HelpPage_Default",
                 "Help/{action}/{apiId}",
                 new { controller = "Help", action = "Index", apiId = UrlParameter.Optional });
