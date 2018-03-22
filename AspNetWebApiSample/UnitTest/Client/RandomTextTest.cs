@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTest.Client
@@ -43,6 +45,20 @@ namespace UnitTest.Client
 
             foreach (var item in bytes)
                 Console.WriteLine(item);
+        }
+
+        [TestMethod]
+        async public Task NewBytes2_NotFound()
+        {
+            using (var http = new HttpClient { BaseAddress = HttpHelper.BaseUri })
+            {
+                var response = await http.GetAsync("api/NewBytes2/-1");
+                Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+
+                var error = await response.Content.ReadAsAsync<HttpError>();
+                Console.WriteLine(error.Message);
+                Console.WriteLine(error.MessageDetail);
+            }
         }
     }
 }
