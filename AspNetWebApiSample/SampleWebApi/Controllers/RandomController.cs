@@ -35,7 +35,7 @@ namespace SampleWebApi.Controllers
         [ActionName("NewInteger")]
         public int NewInteger1(int minValue, int maxValue)
         {
-            if (minValue > maxValue) throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (minValue > maxValue) throw new HttpResponseException(HttpStatusCode.BadRequest);
 
             return random.Next(minValue, maxValue);
         }
@@ -49,7 +49,7 @@ namespace SampleWebApi.Controllers
         [ActionName("NewInteger")]
         public int NewInteger2(RangeInfo range)
         {
-            if (range.MinValue > range.MaxValue) throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (range.MinValue > range.MaxValue) throw new HttpResponseException(HttpStatusCode.BadRequest);
 
             return random.Next(range.MinValue, range.MaxValue);
         }
