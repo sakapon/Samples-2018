@@ -61,12 +61,10 @@ namespace SampleWebApi.Controllers
         /// <returns>New double values.</returns>
         [HttpGet]
         [Route("NewDoubles/{count:int:range(0,64)}")]
-        public double[] NewDoubles(int count)
-        {
-            return Enumerable.Range(0, count)
+        public double[] NewDoubles(int count) =>
+            Enumerable.Range(0, count)
                 .Select(i => random.NextDouble())
                 .ToArray();
-        }
 
         /// <summary>
         /// Creates a new datetime on the specified date.
@@ -76,30 +74,21 @@ namespace SampleWebApi.Controllers
         [HttpGet]
         [Route(@"NewDateTime/{date:datetime:regex(\d{4}-\d{2}-\d{2})}")]
         [Route(@"NewDateTime/{*date:datetime:regex(\d{4}/\d{2}/\d{2})}")]
-        public DateTime NewDateTime(DateTime date)
-        {
-            return date + TimeSpan.FromHours(24 * random.NextDouble());
-        }
+        public DateTime NewDateTime(DateTime date) => date + TimeSpan.FromHours(24 * random.NextDouble());
 
         /// <summary>
         /// Creates a new UUID (GUID).
         /// </summary>
         /// <returns>A new UUID (GUID).</returns>
         [HttpGet]
-        public Guid NewUuid()
-        {
-            return Guid.NewGuid();
-        }
+        public Guid NewUuid() => Guid.NewGuid();
 
         /// <summary>
         /// Creates a new UUID info.
         /// </summary>
         /// <returns>A new UUID info.</returns>
         [HttpGet]
-        public UuidInfo NewUuidInfo()
-        {
-            return new UuidInfo { Id = Guid.NewGuid(), Date = DateTime.Now };
-        }
+        public UuidInfo NewUuidInfo() => new UuidInfo { Id = Guid.NewGuid(), Date = DateTime.Now };
     }
 
     /// <summary>The range info.</summary>
