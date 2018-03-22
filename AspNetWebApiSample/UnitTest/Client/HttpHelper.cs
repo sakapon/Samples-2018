@@ -9,7 +9,7 @@ namespace UnitTest.Client
 {
     public static class HttpHelper
     {
-        static readonly Uri BaseUri = new Uri("http://localhost:1961/");
+        public static readonly Uri BaseUri = new Uri("http://localhost:1961/");
 
         async public static Task<T> GetAsync<T>(string uri)
         {

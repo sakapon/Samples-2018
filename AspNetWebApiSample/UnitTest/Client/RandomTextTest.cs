@@ -9,13 +9,12 @@ namespace UnitTest.Client
     [TestClass]
     public class RandomTextTest
     {
-        static readonly Uri BaseUri = new Uri("http://localhost:1961/");
-
         async public static Task<string> GetTextAsync(string uri)
         {
-            using (var http = new HttpClient { BaseAddress = BaseUri })
+            using (var http = new HttpClient { BaseAddress = HttpHelper.BaseUri })
             {
                 var response = await http.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
 
                 Assert.AreEqual("text/plain", response.Content.Headers.ContentType.MediaType);
                 return await response.Content.ReadAsStringAsync();
