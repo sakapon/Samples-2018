@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace SampleWebApi
 {
@@ -10,6 +11,7 @@ namespace SampleWebApi
         public static void Register(HttpConfiguration config)
         {
             // Web API の設定およびサービス
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             // Web API ルート
             config.MapHttpAttributeRoutes();
