@@ -15,8 +15,11 @@ namespace SampleWebApi
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             // Returns JSON on Google Chrome.
+            // Retains XML support:
             config.Formatters.JsonFormatter.MediaTypeMappings.Add(new RequestHeaderMapping("Accept", "text/html", StringComparison.InvariantCultureIgnoreCase, true, "application/json"));
+            // Quits XML support:
             //config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            // Quits XML support:
             //config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             // Web API ルート
