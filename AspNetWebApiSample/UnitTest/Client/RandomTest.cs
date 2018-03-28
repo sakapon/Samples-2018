@@ -32,26 +32,33 @@ namespace UnitTest.Client
         [TestMethod]
         async public Task Echo_Json()
         {
-            await Echo_ContentType(12, "application/json", "application/json");
+            await Echo_ContentType(12, new[] { "application/json" }, "application/json");
         }
 
         [TestMethod]
         async public Task Echo_Xml()
         {
-            await Echo_ContentType(-12, "application/xml", "application/xml");
+            await Echo_ContentType(-12, new[] { "application/xml" }, "application/xml");
         }
 
         [TestMethod]
         async public Task Echo_Html()
         {
-            await Echo_ContentType(1234, "text/html", "application/json");
+            await Echo_ContentType(1234, new[] { "text/html" }, "application/json");
         }
 
-        async static Task Echo_ContentType(int i, string acceptMediaType, string expectedMediaType)
+        [TestMethod]
+        async public Task Echo_Chrome()
+        {
+            await Echo_ContentType(1234, new[] { "text/html", "application/xml" }, "application/json");
+        }
+
+        async static Task Echo_ContentType(int i, string[] acceptMediaTypes, string expectedMediaType)
         {
             using (var http = new HttpClient { BaseAddress = HttpHelper.BaseUri })
             {
-                http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptMediaType));
+                foreach (var mediaType in acceptMediaTypes)
+                    http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = await http.GetAsync($"api/Random/Echo/{i}");
                 response.EnsureSuccessStatusCode();
                 Assert.AreEqual(expectedMediaType, response.Content.Headers.ContentType.MediaType);
