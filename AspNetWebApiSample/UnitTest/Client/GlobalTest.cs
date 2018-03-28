@@ -28,6 +28,21 @@ namespace UnitTest.Client
             }
         }
 
+        async static Task Echo_ContentType(int i, string[] acceptMediaTypes, string expectedMediaType)
+        {
+            using (var http = new HttpClient { BaseAddress = HttpHelper.BaseUri })
+            {
+                foreach (var mediaType in acceptMediaTypes)
+                    http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
+                var response = await http.GetAsync($"api/Random/Echo/{i}");
+                response.EnsureSuccessStatusCode();
+
+                Assert.AreEqual(expectedMediaType, response.Content.Headers.ContentType.MediaType);
+                var result = await response.Content.ReadAsAsync<int>();
+                Assert.AreEqual(i, result);
+            }
+        }
+
         [TestMethod]
         async public Task Echo_Json()
         {
@@ -50,20 +65,6 @@ namespace UnitTest.Client
         async public Task Echo_Chrome()
         {
             await Echo_ContentType(1234, new[] { "text/html", "application/xml" }, "application/json");
-        }
-
-        async static Task Echo_ContentType(int i, string[] acceptMediaTypes, string expectedMediaType)
-        {
-            using (var http = new HttpClient { BaseAddress = HttpHelper.BaseUri })
-            {
-                foreach (var mediaType in acceptMediaTypes)
-                    http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-                var response = await http.GetAsync($"api/Random/Echo/{i}");
-                response.EnsureSuccessStatusCode();
-                Assert.AreEqual(expectedMediaType, response.Content.Headers.ContentType.MediaType);
-                var result = await response.Content.ReadAsAsync<int>();
-                Assert.AreEqual(i, result);
-            }
         }
     }
 }
