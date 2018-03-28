@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -9,6 +10,24 @@ namespace UnitTest.Client
     [TestClass]
     public class GlobalTest
     {
+        [TestMethod]
+        async public Task Echo_Cors()
+        {
+            var i = 234;
+
+            using (var http = new HttpClient { BaseAddress = HttpHelper.BaseUri })
+            {
+                http.DefaultRequestHeaders.Add("Origin", "http://localhost:8080");
+                var response = await http.GetAsync($"api/Random/Echo/{i}");
+                response.EnsureSuccessStatusCode();
+
+                var allowOrigin = response.Headers.GetValues("Access-Control-Allow-Origin").ToArray();
+                CollectionAssert.AreEqual(new[] { "*" }, allowOrigin);
+                var result = await response.Content.ReadAsAsync<int>();
+                Assert.AreEqual(i, result);
+            }
+        }
+
         [TestMethod]
         async public Task Echo_Json()
         {
