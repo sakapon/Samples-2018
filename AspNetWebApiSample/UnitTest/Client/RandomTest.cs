@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SampleWebApi.Controllers;
@@ -27,44 +26,6 @@ namespace UnitTest.Client
             var result = await HttpHelper.GetAsync<int>("api/Random/Echo/321");
 
             Assert.AreEqual(321, result);
-        }
-
-        [TestMethod]
-        async public Task Echo_Json()
-        {
-            await Echo_ContentType(12, new[] { "application/json" }, "application/json");
-        }
-
-        [TestMethod]
-        async public Task Echo_Xml()
-        {
-            await Echo_ContentType(-12, new[] { "application/xml" }, "application/xml");
-        }
-
-        [TestMethod]
-        async public Task Echo_Html()
-        {
-            await Echo_ContentType(1234, new[] { "text/html" }, "application/json");
-        }
-
-        [TestMethod]
-        async public Task Echo_Chrome()
-        {
-            await Echo_ContentType(1234, new[] { "text/html", "application/xml" }, "application/json");
-        }
-
-        async static Task Echo_ContentType(int i, string[] acceptMediaTypes, string expectedMediaType)
-        {
-            using (var http = new HttpClient { BaseAddress = HttpHelper.BaseUri })
-            {
-                foreach (var mediaType in acceptMediaTypes)
-                    http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-                var response = await http.GetAsync($"api/Random/Echo/{i}");
-                response.EnsureSuccessStatusCode();
-                Assert.AreEqual(expectedMediaType, response.Content.Headers.ContentType.MediaType);
-                var result = await response.Content.ReadAsAsync<int>();
-                Assert.AreEqual(i, result);
-            }
         }
 
         [TestMethod]
