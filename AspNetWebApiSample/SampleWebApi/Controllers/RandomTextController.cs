@@ -22,7 +22,7 @@ namespace SampleWebApi.Controllers
         /// Creates new byte values with the specified count.
         /// </summary>
         /// <param name="count">The count of the result.</param>
-        /// <returns>New byte values.</returns>
+        /// <returns>New byte values. The content type is text/plain.</returns>
         [HttpGet]
         [Route("NewBytes1/{count:int:range(0,64)}")]
         [ResponseType(typeof(string))]
@@ -39,7 +39,7 @@ namespace SampleWebApi.Controllers
         /// Creates new byte values with the specified count.
         /// </summary>
         /// <param name="count">The count of the result.</param>
-        /// <returns>New byte values.</returns>
+        /// <returns>New byte values. The content type is text/plain.</returns>
         [HttpGet]
         [Route("NewBytes2/{count:int:range(0,64)}")]
         [ResponseType(typeof(string))]
