@@ -21,14 +21,16 @@ namespace SampleWebApi.Controllers
         /// Creates a PNG data of the specified color.
         /// </summary>
         /// <param name="name">The color name.</param>
+        /// <param name="w">The width.</param>
+        /// <param name="h">The height.</param>
         /// <returns>A PNG data. The content type is image/png.</returns>
         [HttpGet]
         [Route("api/Colors/{name}.png")]
         [ResponseType(typeof(byte[]))]
-        public HttpResponseMessage GetImage(string name)
+        public HttpResponseMessage GetImage(string name, int w = 300, int h = 200)
         {
             var color = Color.FromName(name);
-            var bitmap = CreateBitmap(300, 200, color);
+            var bitmap = CreateBitmap(w, h, color);
 
             var response = Request.CreateResponse();
             response.Content = new ByteArrayContent(ToBytes(bitmap));
