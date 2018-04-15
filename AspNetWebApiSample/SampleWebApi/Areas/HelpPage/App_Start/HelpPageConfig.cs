@@ -68,9 +68,9 @@ namespace SampleWebApi.Areas.HelpPage
             //// and action named "Put".
             //config.SetSampleRequest("1234", new MediaTypeHeaderValue("text/plain"), "Values", "Put");
 
-            //// Uncomment the following to use the image on "../images/aspNetHome.png" directly as the response sample for media type "image/png"
-            //// on the controller named "Values" and action named "Get" with parameter "id".
-            //config.SetSampleResponse(new ImageSample("../images/aspNetHome.png"), new MediaTypeHeaderValue("image/png"), "Values", "Get", "id");
+            // Uncomment the following to use the image on "../images/aspNetHome.png" directly as the response sample for media type "image/png"
+            // on the controller named "Values" and action named "Get" with parameter "id".
+            config.SetSampleResponse(new ImageSample("/Images/Help/Orange.gif"), new MediaTypeHeaderValue("image/png"), "Colors", "GetImage");
             config.SetSampleResponse(new TextSample("123\n56\n234"), new MediaTypeHeaderValue("text/plain"), "RandomText", "NewBytes1");
             config.SetSampleResponse(new TextSample("123\n56\n234"), new MediaTypeHeaderValue("text/plain"), "RandomText", "NewBytes2");
 
