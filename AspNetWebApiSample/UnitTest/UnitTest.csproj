@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\ColorsTest.cs" />
     <Compile Include="Client\GlobalTest.cs" />
     <Compile Include="Client\HttpHelper.cs" />
     <Compile Include="Client\PeopleTest.cs" />
