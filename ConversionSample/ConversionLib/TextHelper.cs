@@ -59,8 +59,10 @@ namespace ConversionLib
                 .ConcatStrings();
         }
 
-        static string ConcatStrings(this IEnumerable<string> source)
+        public static string ConcatStrings(this IEnumerable<string> source)
         {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
             return string.Concat(source);
         }
 
