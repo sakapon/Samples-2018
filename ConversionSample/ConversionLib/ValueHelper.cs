@@ -34,5 +34,21 @@ namespace ConversionLib
             }
             return Convert.ChangeType(value, type);
         }
+
+        public static byte[] ToBytes(this DateTime dateTime)
+        {
+            var ticks = dateTime.Ticks;
+
+            var b = new byte[8];
+            b[0] = (byte)(ticks >> 56);
+            b[1] = (byte)(ticks >> 48);
+            b[2] = (byte)(ticks >> 40);
+            b[3] = (byte)(ticks >> 32);
+            b[4] = (byte)(ticks >> 24);
+            b[5] = (byte)(ticks >> 16);
+            b[6] = (byte)(ticks >> 8);
+            b[7] = (byte)ticks;
+            return b;
+        }
     }
 }

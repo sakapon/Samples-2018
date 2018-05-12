@@ -49,11 +49,24 @@ namespace ConversionLib
                 .ToArray();
         }
 
-        public static string ToHexString(this byte[] binary, bool lowercase = false)
+        public static string ToHexString(this byte[] binary, bool uppercase = false)
         {
             if (binary == null) throw new ArgumentNullException(nameof(binary));
 
-            return new string(binary.SelectMany(b => b.ToString(lowercase ? "x2" : "X2")).ToArray());
+            var format = uppercase ? "X2" : "x2";
+            return binary
+                .Select(b => b.ToString(format))
+                .ConcatStrings();
+        }
+
+        static string ConcatStrings(this IEnumerable<string> source)
+        {
+            return string.Concat(source);
+        }
+
+        public static string ToIso8601String(this DateTime dateTime)
+        {
+            return dateTime.ToString("O", CultureInfo.InvariantCulture);
         }
     }
 }
