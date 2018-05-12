@@ -73,6 +73,20 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void UrlDecode_1()
+        {
+            var actual = SymbolChars.UrlEncode().UrlDecode();
+            Assert.AreEqual(SymbolChars, actual);
+        }
+
+        [TestMethod]
+        public void UrlDecodeForForm_1()
+        {
+            var actual = SymbolChars.UrlEncodeForForm().UrlDecodeForForm();
+            Assert.AreEqual(SymbolChars, actual);
+        }
+
+        [TestMethod]
         public void HtmlEncode_1()
         {
             Console.WriteLine(SymbolChars);
