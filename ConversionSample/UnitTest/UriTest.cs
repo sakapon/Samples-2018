@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetWebUtility = System.Net.WebUtility;
+using WebHttpUtility = System.Web.HttpUtility;
 
 namespace UnitTest
 {
@@ -18,6 +19,7 @@ namespace UnitTest
             Console.WriteLine(AsciiString);
             Console.WriteLine(Uri.EscapeUriString(AsciiString));
             Console.WriteLine(NetWebUtility.UrlEncode(AsciiString));
+            Console.WriteLine(WebHttpUtility.UrlEncode(AsciiString));
             Console.WriteLine(Uri.EscapeDataString(AsciiString));
         }
 
@@ -25,6 +27,14 @@ namespace UnitTest
         public void EscapeUriString_2()
         {
             Assert.AreEqual("%E3%81%82", Uri.EscapeUriString("あ"));
+        }
+
+        [TestMethod]
+        public void HtmlEncode_1()
+        {
+            Console.WriteLine(AsciiString);
+            Console.WriteLine(NetWebUtility.HtmlEncode(AsciiString));
+            Console.WriteLine(WebHttpUtility.HtmlEncode(AsciiString));
         }
     }
 }

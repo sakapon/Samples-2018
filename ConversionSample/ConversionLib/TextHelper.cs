@@ -66,6 +66,13 @@ namespace ConversionLib
             return string.Concat(source);
         }
 
+        public static string JoinStrings(this IEnumerable<string> source, string separator)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            return string.Join(separator, source);
+        }
+
         public static string ToIso8601String(this DateTime dateTime)
         {
             return dateTime.ToString("O", CultureInfo.InvariantCulture);
