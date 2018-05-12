@@ -14,7 +14,7 @@ namespace UnitTest
         // 33 symbols
         static readonly string SymbolChars = string.Concat(Enumerable.Range(32, 127 - 32).Select(i => (char)(short)i).Where(c => !char.IsLetter(c) && !char.IsNumber(c)));
         const string RFC3986_UnreservedChars = "-._~";
-        static readonly short[] PercentEncodeSet = new short[] { 32, 34, 35, 60, 62, 96, 123, 125, 126 };
+        const string UrlStandard_PercentEncodeSet = " \"#<>`{}~";
 
         [TestMethod]
         public void EscapeDataString_RFC3986()
@@ -30,12 +30,18 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void EscapeUriString_1()
+        public void EscapeDataString_JP()
+        {
+            Assert.AreEqual("%E3%81%82", Uri.EscapeDataString("あ"));
+        }
+
+        [TestMethod]
+        public void UrlEncode_1()
         {
             Console.WriteLine(SymbolChars);
 
-            UriEncodeTest(Uri.EscapeUriString);
-            UriEncodeTest(Uri.EscapeDataString);
+            UrlEncodeTest(Uri.EscapeUriString);
+            UrlEncodeTest(Uri.EscapeDataString);
         }
 
         [TestMethod]
@@ -43,27 +49,21 @@ namespace UnitTest
         {
             Console.WriteLine(SymbolChars);
 
-            UriEncodeTest(NetWebUtility.UrlEncode);
-            UriEncodeTest(s => WebHttpUtility.UrlEncode(s).ToUpperInvariant());
-            UriEncodeTest(TextHelper.UrlEncodeForForm);
+            UrlEncodeTest(NetWebUtility.UrlEncode);
+            UrlEncodeTest(s => WebHttpUtility.UrlEncode(s).ToUpperInvariant());
+            UrlEncodeTest(TextHelper.UrlEncodeForForm);
         }
 
-        static void UriEncodeTest(Func<string, string> urlEncode)
+        static void UrlEncodeTest(Func<string, string> urlEncode)
         {
-            var escaped = SymbolChars
+            var changed = SymbolChars
                 .Select(c => c.ToString())
                 .Select(c => new { c, e = urlEncode(c) })
                 .Where(_ => _.c != _.e)
                 .ToArray();
 
-            Console.WriteLine(escaped.Select(_ => _.c).ConcatStrings());
-            Console.WriteLine(escaped.Select(_ => _.e).ConcatStrings());
-        }
-
-        [TestMethod]
-        public void EscapeUriString_2()
-        {
-            Assert.AreEqual("%E3%81%82", Uri.EscapeUriString("あ"));
+            Console.WriteLine(changed.Select(_ => _.c).ConcatStrings());
+            Console.WriteLine(changed.Select(_ => _.e).ConcatStrings());
         }
 
         [TestMethod]
