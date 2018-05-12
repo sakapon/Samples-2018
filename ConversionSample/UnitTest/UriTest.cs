@@ -36,6 +36,12 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void EscapeUriString_1()
+        {
+            Console.WriteLine(Uri.EscapeUriString("https://abc.xyz/" + SymbolChars));
+        }
+
+        [TestMethod]
         public void UrlEncode_1()
         {
             Console.WriteLine(SymbolChars);
