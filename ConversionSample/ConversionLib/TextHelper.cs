@@ -38,13 +38,13 @@ namespace ConversionLib
             return Convert.ToBase64String(binary);
         }
 
-        public static byte[] FromHexString(this string hexString)
+        public static byte[] FromHexString(this string text)
         {
-            if (hexString == null) throw new ArgumentNullException(nameof(hexString));
-            if (hexString.Length % 2 != 0) throw new FormatException("入力文字列の長さが偶数ではありません。");
+            if (text == null) throw new ArgumentNullException(nameof(text));
+            if (text.Length % 2 != 0) throw new FormatException("The length of the input text must be even.");
 
-            return Enumerable.Range(0, hexString.Length / 2)
-                .Select(i => hexString.Substring(2 * i, 2))
+            return Enumerable.Range(0, text.Length / 2)
+                .Select(i => text.Substring(2 * i, 2))
                 .Select(s => byte.Parse(s, NumberStyles.HexNumber))
                 .ToArray();
         }
