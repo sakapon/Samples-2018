@@ -77,5 +77,17 @@ namespace ConversionLib
         {
             return dateTime.ToString("O", CultureInfo.InvariantCulture);
         }
+
+        public static string UrlEncode(this string value) =>
+            Uri.EscapeDataString(value ?? "");
+
+        public static string UrlEncodeForForm(this string value) =>
+            value.UrlEncode().Replace("%20", "+");
+
+        public static string UrlDecode(this string value) =>
+            Uri.UnescapeDataString(value ?? "");
+
+        public static string UrlDecodeForForm(this string value) =>
+            (value ?? "").Replace("+", "%20").UrlDecode();
     }
 }
