@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextHelper.cs" />
+    <Compile Include="TypeHelper.cs" />
     <Compile Include="ValueHelper.cs" />
     <Compile Include="XamlHelper.cs" />
   </ItemGroup>
