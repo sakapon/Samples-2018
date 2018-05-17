@@ -32,9 +32,9 @@ namespace UnitTest.Cryptography
             var hash = HashFunctions.GenerateHash(data, salt);
             Console.WriteLine(hash);
 
-            Assert.IsTrue(HashFunctions.VerifyData(data, salt, hash));
-            Assert.IsFalse(HashFunctions.VerifyData(data2, salt, hash));
-            Assert.IsFalse(HashFunctions.VerifyData(data, salt2, hash));
+            Assert.IsTrue(HashFunctions.VerifyByHash(data, salt, hash));
+            Assert.IsFalse(HashFunctions.VerifyByHash(data2, salt, hash));
+            Assert.IsFalse(HashFunctions.VerifyByHash(data, salt2, hash));
         }
     }
 }
