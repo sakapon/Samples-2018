@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography\AsymmetricEncryption.cs" />
     <Compile Include="Cryptography\HashFunction.cs" />
     <Compile Include="Cryptography\HashFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
