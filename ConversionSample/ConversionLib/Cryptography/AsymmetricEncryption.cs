@@ -10,7 +10,10 @@ namespace ConversionLib.Cryptography
     {
         public const int KeyLengthInBits = 2048;
 
-        public static AsymmetricKeys CreateKeys()
+        // The Encoding.UTF8.GetBytes method does not prepend a preamble to the encoded byte sequence.
+        static readonly Encoding TextEncoding = Encoding.UTF8;
+
+        public static AsymmetricKeys GenerateKeys()
         {
             using (var algorithm = new RSACryptoServiceProvider(KeyLengthInBits))
             {
@@ -31,7 +34,7 @@ namespace ConversionLib.Cryptography
             {
                 algorithm.FromXmlString(publicKey);
 
-                return algorithm.Encrypt(data, true);
+                return algorithm.Encrypt(data, false);
             }
         }
 
@@ -44,8 +47,22 @@ namespace ConversionLib.Cryptography
             {
                 algorithm.FromXmlString(keysPair);
 
-                return algorithm.Decrypt(data, true);
+                return algorithm.Decrypt(data, false);
             }
+        }
+
+        public static string Encrypt(string data, string publicKey)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            return Convert.ToBase64String(Encrypt(TextEncoding.GetBytes(data), publicKey));
+        }
+
+        public static string Decrypt(string data, string keysPair)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            return TextEncoding.GetString(Decrypt(Convert.FromBase64String(data), keysPair));
         }
     }
 
