@@ -52,6 +52,7 @@
     <Compile Include="Cryptography\AsymmetricEncryptionTest.cs" />
     <Compile Include="Cryptography\HashFunctionsTest.cs" />
     <Compile Include="Cryptography\RandomHelperTest.cs" />
+    <Compile Include="Cryptography\SymmetricEncryptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UriTest.cs" />
     <Compile Include="ValueHelperTest.cs" />
