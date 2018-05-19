@@ -31,5 +31,19 @@ namespace ConversionLib.Cryptography
             var commonKey = AsymmetricEncryption.Decrypt(encryptedKey, keysPair);
             return SymmetricEncryption.Decrypt(encryptedData, commonKey);
         }
+
+        public static string Encrypt(string data, string publicKey)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            return Convert.ToBase64String(Encrypt(data.ToBytes(), publicKey));
+        }
+
+        public static string Decrypt(string data, string keysPair)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            return Decrypt(Convert.FromBase64String(data), keysPair).ToText();
+        }
     }
 }
