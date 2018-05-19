@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 using ConversionLib.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,6 +29,36 @@ namespace UnitTest.Cryptography
 
             Console.WriteLine(encrypted);
             Assert.AreEqual(data, decrypted);
+        }
+
+        [TestMethod]
+        public void Encrypt_Stream_Short()
+        {
+            Encrypt_Stream(100);
+        }
+
+        [TestMethod]
+        public void Encrypt_Stream_Long()
+        {
+            Encrypt_Stream(10000);
+            Encrypt_Stream(999999);
+        }
+
+        static void Encrypt_Stream(int dataSize)
+        {
+            var data = RandomHelper.GenerateBytes(dataSize);
+            var key = SymmetricEncryption.GenerateKeyBase64();
+            var encryptedStream = new MemoryStream();
+            var decryptedStream = new MemoryStream();
+
+            SymmetricEncryption.Encrypt(new MemoryStream(data), encryptedStream, key);
+            var encrypted = encryptedStream.ToArray();
+            SymmetricEncryption.Decrypt(new MemoryStream(encrypted), decryptedStream, key);
+            var decrypted = decryptedStream.ToArray();
+
+            if (dataSize <= 1024)
+                Console.WriteLine(Convert.ToBase64String(encrypted));
+            CollectionAssert.AreEqual(data, decrypted);
         }
     }
 }

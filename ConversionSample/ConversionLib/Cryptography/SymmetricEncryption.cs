@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,6 +18,7 @@ namespace ConversionLib.Cryptography
         {
             var algorithm = CreateAlgorithm();
             algorithm.Key = key;
+            algorithm.BlockSize = 8 * SaltSize;
             algorithm.IV = new byte[SaltSize];
             return algorithm;
         }
@@ -57,6 +59,37 @@ namespace ConversionLib.Cryptography
             if (key == null) throw new ArgumentNullException(nameof(key));
 
             return Decrypt(Convert.FromBase64String(data), Convert.FromBase64String(key)).ToText();
+        }
+
+        public static void Encrypt(Stream input, Stream output, byte[] key) => Transform(input, output, key, true);
+        public static void Decrypt(Stream input, Stream output, byte[] key) => Transform(input, output, key, false);
+
+        static void Transform(Stream input, Stream output, byte[] key, bool encrypt)
+        {
+            if (input == null) throw new ArgumentNullException(nameof(input));
+            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (key == null) throw new ArgumentNullException(nameof(key));
+
+            using (var algorithm = CreateAlgorithm(key))
+            using (var transform = encrypt ? algorithm.CreateEncryptor() : algorithm.CreateDecryptor())
+            using (var crypto = new CryptoStream(output, transform, CryptoStreamMode.Write))
+            {
+                input.CopyTo(crypto);
+            }
+        }
+
+        public static void Encrypt(Stream input, Stream output, string key)
+        {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+
+            Encrypt(input, output, Convert.FromBase64String(key));
+        }
+
+        public static void Decrypt(Stream input, Stream output, string key)
+        {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+
+            Decrypt(input, output, Convert.FromBase64String(key));
         }
     }
 }
