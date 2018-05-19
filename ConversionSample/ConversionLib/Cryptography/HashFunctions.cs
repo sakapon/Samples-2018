@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace ConversionLib.Cryptography
@@ -16,19 +15,8 @@ namespace ConversionLib.Cryptography
         // The Encoding.UTF8.GetBytes method does not prepend a preamble to the encoded byte sequence.
         static readonly Encoding TextEncoding = Encoding.UTF8;
 
-        static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
-
-        public static byte[] GenerateBytes(int length)
-        {
-            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length), length, "The value must be non-negative.");
-
-            var data = new byte[length];
-            Rng.GetBytes(data);
-            return data;
-        }
-
-        public static byte[] GenerateSalt() => GenerateBytes(SaltLength);
-        public static string GenerateSaltBase64() => Convert.ToBase64String(GenerateSalt());
+        public static byte[] GenerateSalt() => RandomHelper.GenerateBytes(SaltLength);
+        public static string GenerateSaltBase64() => RandomHelper.GenerateBase64(SaltLength);
 
         public static byte[] GenerateHash(byte[] data) => Algorithm.GenerateHash(data);
         public static string GenerateHash(string data)
