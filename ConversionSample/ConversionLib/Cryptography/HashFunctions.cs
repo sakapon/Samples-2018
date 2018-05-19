@@ -35,6 +35,7 @@ namespace ConversionLib.Cryptography
             return Convert.ToBase64String(GenerateHash(data.ToBytes(), Convert.FromBase64String(salt)));
         }
 
+        public static bool VerifyByHash(string data, string hash) => GenerateHash(data) == hash;
         public static bool VerifyByHash(string data, string salt, string hash) => GenerateHash(data, salt) == hash;
 
         public static string GenerateHashWithSalt(string data)
@@ -43,8 +44,8 @@ namespace ConversionLib.Cryptography
 
             var salt = GenerateSalt();
             var hash = GenerateHash(data.ToBytes(), salt);
-            ToHashWithSalt(salt, hash, out var result);
-            return Convert.ToBase64String(result);
+            ToHashWithSalt(salt, hash, out var hashWithSalt);
+            return Convert.ToBase64String(hashWithSalt);
         }
 
         public static bool VerifyByHashWithSalt(string data, string hashWithSalt)

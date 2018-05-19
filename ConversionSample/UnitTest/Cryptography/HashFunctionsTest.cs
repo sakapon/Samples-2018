@@ -56,6 +56,20 @@ namespace UnitTest.Cryptography
         }
 
         [TestMethod]
+        public void GenerateHash_Salt_SHA256Hash()
+        {
+            HashFunctions.Algorithm = new SHA256Hash();
+            GenerateHash_Salt();
+        }
+
+        [TestMethod]
+        public void GenerateHash_Salt_Rfc2898Hash()
+        {
+            HashFunctions.Algorithm = new Rfc2898Hash();
+            GenerateHash_Salt();
+        }
+
+        [TestMethod]
         public void GenerateHashWithSalt_SHA256Hash()
         {
             HashFunctions.Algorithm = new SHA256Hash();
@@ -70,6 +84,20 @@ namespace UnitTest.Cryptography
         }
 
         static void GenerateHash()
+        {
+            var data = "P@ssw0rd";
+            var hash = HashFunctions.GenerateHash(data);
+            Console.WriteLine(hash);
+
+            var data2 = "P@ssw1rd";
+            var hash2 = RandomHelper.GenerateBase64(HashFunctions.HashLength);
+
+            Assert.IsTrue(HashFunctions.VerifyByHash(data, hash));
+            Assert.IsFalse(HashFunctions.VerifyByHash(data2, hash));
+            Assert.IsFalse(HashFunctions.VerifyByHash(data, hash2));
+        }
+
+        static void GenerateHash_Salt()
         {
             var data = "P@ssw0rd";
             var salt = HashFunctions.GenerateSaltBase64();
