@@ -45,6 +45,7 @@
     <Compile Include="Cryptography\HashFunction.cs" />
     <Compile Include="Cryptography\HashFunctions.cs" />
     <Compile Include="Cryptography\RandomHelper.cs" />
+    <Compile Include="Cryptography\SymmetricEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextHelper.cs" />
     <Compile Include="TypeHelper.cs" />
