@@ -7,11 +7,11 @@ namespace ConversionLib.Cryptography
 {
     public static class AsymmetricEncryption
     {
-        public const int KeyLengthInBits = 2048;
+        public const int KeySizeInBits = 2048;
 
         public static AsymmetricKeys GenerateKeys()
         {
-            using (var algorithm = new RSACryptoServiceProvider(KeyLengthInBits))
+            using (var algorithm = new RSACryptoServiceProvider(KeySizeInBits))
             {
                 return new AsymmetricKeys
                 {

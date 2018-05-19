@@ -8,11 +8,11 @@ namespace ConversionLib.Cryptography
 {
     public static class CryptoHelper
     {
-        public static byte[] GenerateBytes(int length)
+        public static byte[] GenerateBytes(int size)
         {
-            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length), length, "The value must be non-negative.");
+            if (size < 0) throw new ArgumentOutOfRangeException(nameof(size), size, "The value must be non-negative.");
 
-            var data = new byte[length];
+            var data = new byte[size];
             using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(data);
@@ -20,7 +20,7 @@ namespace ConversionLib.Cryptography
             return data;
         }
 
-        public static string GenerateBase64(int length) => Convert.ToBase64String(GenerateBytes(length));
+        public static string GenerateBase64(int size) => Convert.ToBase64String(GenerateBytes(size));
 
         // The Encoding.UTF8.GetBytes method does not prepend a preamble to the encoded byte sequence.
         internal static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);

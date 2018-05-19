@@ -18,10 +18,10 @@ namespace UnitTest.Cryptography
         [TestMethod]
         public void GenerateBase64()
         {
-            var length = 64;
-            var actual = CryptoHelper.GenerateBase64(length);
+            var size = 64;
+            var actual = CryptoHelper.GenerateBase64(size);
             Console.WriteLine(actual);
-            Assert.AreEqual(length, Convert.FromBase64String(actual).Length);
+            Assert.AreEqual(size, Convert.FromBase64String(actual).Length);
         }
     }
 }

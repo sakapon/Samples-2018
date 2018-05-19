@@ -7,8 +7,8 @@ namespace ConversionLib.Cryptography
 {
     public abstract class HashFunctionBase
     {
-        public abstract int HashLength { get; }
-        public abstract int SaltLength { get; }
+        public abstract int HashSize { get; }
+        public abstract int SaltSize { get; }
 
         public abstract byte[] GenerateHash(byte[] data);
         public abstract byte[] GenerateHash(byte[] data, byte[] salt);
@@ -16,8 +16,8 @@ namespace ConversionLib.Cryptography
 
     public class SHA256Hash : HashFunctionBase
     {
-        public override int HashLength { get; } = 256 / 8;
-        public override int SaltLength { get; } = 512 / 8;
+        public override int HashSize { get; } = 256 / 8;
+        public override int SaltSize { get; } = 512 / 8;
 
         public override byte[] GenerateHash(byte[] data)
         {
@@ -47,16 +47,16 @@ namespace ConversionLib.Cryptography
     {
         const int Iterations = 10000;
 
-        public override int HashLength { get; } = 256 / 8;
-        public override int SaltLength { get; } = 128 / 8;
+        public override int HashSize { get; } = 256 / 8;
+        public override int SaltSize { get; } = 128 / 8;
 
         public override byte[] GenerateHash(byte[] data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            using (var algorithm = new Rfc2898DeriveBytes(data, new byte[SaltLength], Iterations))
+            using (var algorithm = new Rfc2898DeriveBytes(data, new byte[SaltSize], Iterations))
             {
-                return algorithm.GetBytes(HashLength);
+                return algorithm.GetBytes(HashSize);
             }
         }
 
@@ -67,7 +67,7 @@ namespace ConversionLib.Cryptography
 
             using (var algorithm = new Rfc2898DeriveBytes(data, salt, Iterations))
             {
-                return algorithm.GetBytes(HashLength);
+                return algorithm.GetBytes(HashSize);
             }
         }
     }

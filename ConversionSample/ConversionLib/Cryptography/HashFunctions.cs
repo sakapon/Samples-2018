@@ -8,11 +8,11 @@ namespace ConversionLib.Cryptography
     {
         internal static HashFunctionBase Algorithm { get; set; } = new Rfc2898Hash();
 
-        public static int HashLength => Algorithm.HashLength;
-        public static int SaltLength => Algorithm.SaltLength;
+        public static int HashSize => Algorithm.HashSize;
+        public static int SaltSize => Algorithm.SaltSize;
 
-        public static byte[] GenerateSalt() => CryptoHelper.GenerateBytes(SaltLength);
-        public static string GenerateSaltBase64() => CryptoHelper.GenerateBase64(SaltLength);
+        public static byte[] GenerateSalt() => CryptoHelper.GenerateBytes(SaltSize);
+        public static string GenerateSaltBase64() => CryptoHelper.GenerateBase64(SaltSize);
 
         public static byte[] GenerateHash(byte[] data) => Algorithm.GenerateHash(data);
         public static string GenerateHash(string data)
@@ -57,15 +57,15 @@ namespace ConversionLib.Cryptography
         // https://github.com/aspnetwebstack/aspnetwebstack/blob/master/src/System.Web.Helpers/Crypto.cs
         static void ToHashWithSalt(byte[] salt, byte[] hash, out byte[] hashWithSalt)
         {
-            hashWithSalt = new byte[SaltLength + HashLength];
+            hashWithSalt = new byte[SaltSize + HashSize];
             Buffer.BlockCopy(salt, 0, hashWithSalt, 0, salt.Length);
             Buffer.BlockCopy(hash, 0, hashWithSalt, salt.Length, hash.Length);
         }
 
         static void FromHashWithSalt(out byte[] salt, out byte[] hash, byte[] hashWithSalt)
         {
-            salt = new byte[SaltLength];
-            hash = new byte[HashLength];
+            salt = new byte[SaltSize];
+            hash = new byte[HashSize];
             Buffer.BlockCopy(hashWithSalt, 0, salt, 0, salt.Length);
             Buffer.BlockCopy(hashWithSalt, salt.Length, hash, 0, hash.Length);
         }
