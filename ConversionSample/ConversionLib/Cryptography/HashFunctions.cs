@@ -13,7 +13,7 @@ namespace ConversionLib.Cryptography
         public static int SaltLength => Algorithm.SaltLength;
 
         // The Encoding.UTF8.GetBytes method does not prepend a preamble to the encoded byte sequence.
-        static readonly Encoding TextEncoding = Encoding.UTF8;
+        static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);
 
         public static byte[] GenerateSalt() => RandomHelper.GenerateBytes(SaltLength);
         public static string GenerateSaltBase64() => RandomHelper.GenerateBase64(SaltLength);
@@ -23,7 +23,7 @@ namespace ConversionLib.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            return Convert.ToBase64String(GenerateHash(TextEncoding.GetBytes(data)));
+            return Convert.ToBase64String(GenerateHash(data.ToBytes()));
         }
 
         public static byte[] GenerateHash(byte[] data, byte[] salt) => Algorithm.GenerateHash(data, salt);
@@ -32,7 +32,7 @@ namespace ConversionLib.Cryptography
             if (data == null) throw new ArgumentNullException(nameof(data));
             if (salt == null) throw new ArgumentNullException(nameof(salt));
 
-            return Convert.ToBase64String(GenerateHash(TextEncoding.GetBytes(data), Convert.FromBase64String(salt)));
+            return Convert.ToBase64String(GenerateHash(data.ToBytes(), Convert.FromBase64String(salt)));
         }
 
         public static bool VerifyByHash(string data, string salt, string hash) => GenerateHash(data, salt) == hash;
@@ -42,7 +42,7 @@ namespace ConversionLib.Cryptography
             if (data == null) throw new ArgumentNullException(nameof(data));
 
             var salt = GenerateSalt();
-            var hash = GenerateHash(TextEncoding.GetBytes(data), salt);
+            var hash = GenerateHash(data.ToBytes(), salt);
             ToHashWithSalt(salt, hash, out var result);
             return Convert.ToBase64String(result);
         }
@@ -53,7 +53,7 @@ namespace ConversionLib.Cryptography
             if (hashWithSalt == null) throw new ArgumentNullException(nameof(hashWithSalt));
 
             FromHashWithSalt(out var salt, out var hash, Convert.FromBase64String(hashWithSalt));
-            return GenerateHash(TextEncoding.GetBytes(data), salt).ByteArrayEqual(hash);
+            return GenerateHash(data.ToBytes(), salt).ByteArrayEqual(hash);
         }
 
         // Crypto.cs implements the hash format as { 0x00, salt, subkey }.
