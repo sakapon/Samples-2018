@@ -8,8 +8,8 @@ namespace ConversionLib.Cryptography
 {
     public static class SymmetricEncryption
     {
-        const int KeySize = 256 / 8;
-        const int SaltSize = 128 / 8;
+        public const int KeySize = 256 / 8;
+        public const int SaltSize = 128 / 8;
 
         static SymmetricAlgorithm CreateAlgorithm() => new RijndaelManaged();
 
