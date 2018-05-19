@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTest.Cryptography
 {
     [TestClass]
-    public class RandomHelperTest
+    public class CryptoHelperTest
     {
         [TestMethod]
         public void Create()
@@ -19,7 +19,7 @@ namespace UnitTest.Cryptography
         public void GenerateBase64()
         {
             var length = 64;
-            var actual = RandomHelper.GenerateBase64(length);
+            var actual = CryptoHelper.GenerateBase64(length);
             Console.WriteLine(actual);
             Assert.AreEqual(length, Convert.FromBase64String(actual).Length);
         }

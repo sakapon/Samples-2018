@@ -27,8 +27,8 @@ namespace ConversionLib.Cryptography
         static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);
         static string ToText(this byte[] data) => Encoding.UTF8.GetString(data);
 
-        public static byte[] GenerateKey() => RandomHelper.GenerateBytes(KeySize);
-        public static string GenerateKeyBase64() => RandomHelper.GenerateBase64(KeySize);
+        public static byte[] GenerateKey() => CryptoHelper.GenerateBytes(KeySize);
+        public static string GenerateKeyBase64() => CryptoHelper.GenerateBase64(KeySize);
 
         public static byte[] Encrypt(byte[] data, byte[] key) => Transform(data, key, true);
         public static byte[] Decrypt(byte[] data, byte[] key) => Transform(data, key, false);

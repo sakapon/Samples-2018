@@ -15,8 +15,8 @@ namespace ConversionLib.Cryptography
         // The Encoding.UTF8.GetBytes method does not prepend a preamble to the encoded byte sequence.
         static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);
 
-        public static byte[] GenerateSalt() => RandomHelper.GenerateBytes(SaltLength);
-        public static string GenerateSaltBase64() => RandomHelper.GenerateBase64(SaltLength);
+        public static byte[] GenerateSalt() => CryptoHelper.GenerateBytes(SaltLength);
+        public static string GenerateSaltBase64() => CryptoHelper.GenerateBase64(SaltLength);
 
         public static byte[] GenerateHash(byte[] data) => Algorithm.GenerateHash(data);
         public static string GenerateHash(string data)

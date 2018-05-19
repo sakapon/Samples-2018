@@ -71,7 +71,7 @@ namespace UnitTest.Cryptography
 
         static void Encrypt_Stream(int dataSize)
         {
-            var data = RandomHelper.GenerateBytes(dataSize);
+            var data = CryptoHelper.GenerateBytes(dataSize);
             var key = SymmetricEncryption.GenerateKeyBase64();
             var encryptedStream = new MemoryStream();
             var decryptedStream = new MemoryStream();

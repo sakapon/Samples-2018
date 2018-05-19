@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 
 namespace ConversionLib.Cryptography
 {
-    public static class RandomHelper
+    public static class CryptoHelper
     {
         public static byte[] GenerateBytes(int length)
         {

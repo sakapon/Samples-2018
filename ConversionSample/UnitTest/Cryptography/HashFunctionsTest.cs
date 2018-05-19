@@ -90,7 +90,7 @@ namespace UnitTest.Cryptography
             Console.WriteLine(hash);
 
             var data2 = "P@ssw1rd";
-            var hash2 = RandomHelper.GenerateBase64(HashFunctions.HashLength);
+            var hash2 = CryptoHelper.GenerateBase64(HashFunctions.HashLength);
 
             Assert.IsTrue(HashFunctions.VerifyByHash(data, hash));
             Assert.IsFalse(HashFunctions.VerifyByHash(data2, hash));
@@ -106,7 +106,7 @@ namespace UnitTest.Cryptography
 
             var data2 = "P@ssw1rd";
             var salt2 = HashFunctions.GenerateSaltBase64();
-            var hash2 = RandomHelper.GenerateBase64(HashFunctions.HashLength);
+            var hash2 = CryptoHelper.GenerateBase64(HashFunctions.HashLength);
 
             Assert.IsTrue(HashFunctions.VerifyByHash(data, salt, hash));
             Assert.IsFalse(HashFunctions.VerifyByHash(data2, salt, hash));
@@ -121,7 +121,7 @@ namespace UnitTest.Cryptography
             Console.WriteLine(hash);
 
             var data2 = "P@ssw1rd";
-            var hash2 = RandomHelper.GenerateBase64(HashFunctions.SaltLength + HashFunctions.HashLength);
+            var hash2 = CryptoHelper.GenerateBase64(HashFunctions.SaltLength + HashFunctions.HashLength);
 
             Assert.IsTrue(HashFunctions.VerifyByHashWithSalt(data, hash));
             Assert.IsFalse(HashFunctions.VerifyByHashWithSalt(data2, hash));
