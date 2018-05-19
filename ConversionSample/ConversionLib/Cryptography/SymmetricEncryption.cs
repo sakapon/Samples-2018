@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace ConversionLib.Cryptography
 {
@@ -22,10 +21,6 @@ namespace ConversionLib.Cryptography
             algorithm.IV = new byte[SaltSize];
             return algorithm;
         }
-
-        // The Encoding.UTF8.GetBytes method does not prepend a preamble to the encoded byte sequence.
-        static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);
-        static string ToText(this byte[] data) => Encoding.UTF8.GetString(data);
 
         public static byte[] GenerateKey() => CryptoHelper.GenerateBytes(KeySize);
         public static string GenerateKeyBase64() => CryptoHelper.GenerateBase64(KeySize);

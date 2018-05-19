@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Security.Cryptography;
 
 namespace ConversionLib.Cryptography
@@ -9,10 +8,6 @@ namespace ConversionLib.Cryptography
     public static class AsymmetricEncryption
     {
         public const int KeyLengthInBits = 2048;
-
-        // The Encoding.UTF8.GetBytes method does not prepend a preamble to the encoded byte sequence.
-        static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);
-        static string ToText(this byte[] data) => Encoding.UTF8.GetString(data);
 
         public static AsymmetricKeys GenerateKeys()
         {
