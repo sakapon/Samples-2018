@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using ConversionLib.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,6 +8,39 @@ namespace UnitTest.Cryptography
     [TestClass]
     public class HashFunctionsTest
     {
+        [TestMethod]
+        public void Create()
+        {
+            var algorithm = HashAlgorithm.Create();
+            Assert.IsInstanceOfType(algorithm, typeof(SHA1CryptoServiceProvider));
+            Assert.AreEqual(160, algorithm.HashSize); // in bits
+        }
+
+        [TestMethod]
+        public void Create_SHA256()
+        {
+            var algorithm = SHA256.Create();
+            Assert.IsInstanceOfType(algorithm, typeof(SHA256Managed));
+            Assert.AreEqual(256, algorithm.HashSize); // in bits
+        }
+
+        [TestMethod]
+        public void Create_KeyedHashAlgorithm()
+        {
+            var algorithm = KeyedHashAlgorithm.Create();
+            Assert.IsInstanceOfType(algorithm, typeof(HMACSHA1));
+            Assert.AreEqual(160, algorithm.HashSize); // in bits
+            Assert.AreEqual(64, algorithm.Key.Length); // in Bytes
+        }
+
+        [TestMethod]
+        public void Create_HMACSHA256()
+        {
+            var algorithm = new HMACSHA256();
+            Assert.AreEqual(256, algorithm.HashSize); // in bits
+            Assert.AreEqual(64, algorithm.Key.Length); // in Bytes
+        }
+
         [TestMethod]
         public void GenerateHash_HMACSHA256()
         {
