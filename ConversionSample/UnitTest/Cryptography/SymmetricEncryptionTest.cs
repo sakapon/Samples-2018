@@ -32,6 +32,31 @@ namespace UnitTest.Cryptography
         }
 
         [TestMethod]
+        public void Encrypt_Old()
+        {
+            var data = "P@ssw0rd";
+
+            var key = SymmetricEncryption.GenerateKeyBase64();
+            var encrypted = SymmetricEncryption_Old.Encrypt(data, key);
+            var decrypted = SymmetricEncryption_Old.Decrypt(encrypted, key);
+
+            Console.WriteLine(encrypted);
+            Assert.AreEqual(data, decrypted);
+        }
+
+        [TestMethod]
+        public void Encrypt_Old_Equals()
+        {
+            var data = "P@ssw0rd";
+            var key = SymmetricEncryption.GenerateKeyBase64();
+
+            var encrypted = SymmetricEncryption.Encrypt(data, key);
+            var encrypted2 = SymmetricEncryption_Old.Encrypt(data, key);
+
+            Assert.AreEqual(encrypted, encrypted2);
+        }
+
+        [TestMethod]
         public void Encrypt_Stream_Short()
         {
             Encrypt_Stream(100);
