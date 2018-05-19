@@ -44,6 +44,7 @@
     <Compile Include="Cryptography\AsymmetricEncryption.cs" />
     <Compile Include="Cryptography\HashFunction.cs" />
     <Compile Include="Cryptography\HashFunctions.cs" />
+    <Compile Include="Cryptography\HybridEncryption.cs" />
     <Compile Include="Cryptography\CryptoHelper.cs" />
     <Compile Include="Cryptography\SymmetricEncryption.cs" />
     <Compile Include="Cryptography\SymmetricEncryption_Old.cs" />

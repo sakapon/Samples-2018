@@ -52,7 +52,10 @@ namespace ConversionLib.Cryptography
             if (data == null) throw new ArgumentNullException(nameof(data));
             if (hashWithSalt == null) throw new ArgumentNullException(nameof(hashWithSalt));
 
-            CryptoHelper.Separate(out var salt, out var hash, Convert.FromBase64String(hashWithSalt), SaltSize);
+            var hashWithSaltBytes = Convert.FromBase64String(hashWithSalt);
+            if (hashWithSaltBytes.Length != SaltSize + HashSize) throw new ArgumentException("The size of the byte array is invalid.", nameof(hashWithSalt));
+
+            CryptoHelper.Separate(out var salt, out var hash, hashWithSaltBytes, SaltSize);
             return GenerateHash(data.ToBytes(), salt).ByteArrayEqual(hash);
         }
     }
