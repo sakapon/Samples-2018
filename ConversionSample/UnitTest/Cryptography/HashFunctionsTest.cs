@@ -42,23 +42,23 @@ namespace UnitTest.Cryptography
         }
 
         [TestMethod]
-        public void GenerateHash_HMACSHA256()
+        public void GenerateHash_SHA256Hash()
         {
-            HashFunctions.Algorithm = new HMACSHA256Hash();
+            HashFunctions.Algorithm = new SHA256Hash();
             GenerateHash();
         }
 
         [TestMethod]
-        public void GenerateHash_Rfc2898()
+        public void GenerateHash_Rfc2898Hash()
         {
             HashFunctions.Algorithm = new Rfc2898Hash();
             GenerateHash();
         }
 
         [TestMethod]
-        public void GenerateHashWithSalt_HMACSHA256Hash()
+        public void GenerateHashWithSalt_SHA256Hash()
         {
-            HashFunctions.Algorithm = new HMACSHA256Hash();
+            HashFunctions.Algorithm = new SHA256Hash();
             GenerateHashWithSalt();
         }
 
@@ -72,12 +72,12 @@ namespace UnitTest.Cryptography
         static void GenerateHash()
         {
             var data = "P@ssw0rd";
-            var salt = HashFunctions.GenerateSaltString();
+            var salt = HashFunctions.GenerateSaltBase64();
             var hash = HashFunctions.GenerateHash(data, salt);
             Console.WriteLine(hash);
 
             var data2 = "P@ssw1rd";
-            var salt2 = HashFunctions.GenerateSaltString();
+            var salt2 = HashFunctions.GenerateSaltBase64();
             var hash2 = Convert.ToBase64String(HashFunctions.GenerateBytes(HashFunctions.HashLength));
 
             Assert.IsTrue(HashFunctions.VerifyByHash(data, salt, hash));

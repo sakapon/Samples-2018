@@ -14,7 +14,7 @@ namespace ConversionLib.Cryptography
         public abstract byte[] GenerateHash(byte[] data, byte[] salt);
     }
 
-    public class HMACSHA256Hash : HashFunctionBase
+    public class SHA256Hash : HashFunctionBase
     {
         public override int HashLength { get; } = 256 / 8;
         public override int SaltLength { get; } = 512 / 8;
