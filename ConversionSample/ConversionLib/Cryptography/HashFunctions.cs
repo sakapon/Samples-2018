@@ -40,7 +40,10 @@ namespace ConversionLib.Cryptography
 
             var salt = GenerateSalt();
             var hash = GenerateHash(data.ToBytes(), salt);
-            ToHashWithSalt(salt, hash, out var hashWithSalt);
+
+            // Crypto.cs implements the hash format as { 0x00, salt, subkey }.
+            // https://github.com/aspnetwebstack/aspnetwebstack/blob/master/src/System.Web.Helpers/Crypto.cs
+            CryptoHelper.Concat(salt, hash, out var hashWithSalt);
             return Convert.ToBase64String(hashWithSalt);
         }
 
@@ -49,36 +52,8 @@ namespace ConversionLib.Cryptography
             if (data == null) throw new ArgumentNullException(nameof(data));
             if (hashWithSalt == null) throw new ArgumentNullException(nameof(hashWithSalt));
 
-            FromHashWithSalt(out var salt, out var hash, Convert.FromBase64String(hashWithSalt));
+            CryptoHelper.Separate(out var salt, out var hash, Convert.FromBase64String(hashWithSalt), SaltSize);
             return GenerateHash(data.ToBytes(), salt).ByteArrayEqual(hash);
-        }
-
-        // Crypto.cs implements the hash format as { 0x00, salt, subkey }.
-        // https://github.com/aspnetwebstack/aspnetwebstack/blob/master/src/System.Web.Helpers/Crypto.cs
-        static void ToHashWithSalt(byte[] salt, byte[] hash, out byte[] hashWithSalt)
-        {
-            hashWithSalt = new byte[SaltSize + HashSize];
-            Buffer.BlockCopy(salt, 0, hashWithSalt, 0, salt.Length);
-            Buffer.BlockCopy(hash, 0, hashWithSalt, salt.Length, hash.Length);
-        }
-
-        static void FromHashWithSalt(out byte[] salt, out byte[] hash, byte[] hashWithSalt)
-        {
-            salt = new byte[SaltSize];
-            hash = new byte[HashSize];
-            Buffer.BlockCopy(hashWithSalt, 0, salt, 0, salt.Length);
-            Buffer.BlockCopy(hashWithSalt, salt.Length, hash, 0, hash.Length);
-        }
-
-        static bool ByteArrayEqual(this byte[] first, byte[] second)
-        {
-            if (Equals(first, second)) return true;
-            if (first == null || second == null) return false;
-            if (first.Length != second.Length) return false;
-
-            for (var i = 0; i < first.Length; i++)
-                if (first[i] != second[i]) return false;
-            return true;
         }
     }
 }
