@@ -48,6 +48,7 @@
     <Compile Include="Cryptography\CryptoHelper.cs" />
     <Compile Include="Cryptography\SymmetricEncryption.cs" />
     <Compile Include="Cryptography\SymmetricEncryption_Old.cs" />
+    <Compile Include="IO\CompressionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextHelper.cs" />
     <Compile Include="TypeHelper.cs" />
