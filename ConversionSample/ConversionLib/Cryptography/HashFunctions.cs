@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace ConversionLib.Cryptography
 {
@@ -57,6 +58,23 @@ namespace ConversionLib.Cryptography
 
             CryptoHelper.Separate(out var salt, out var hash, hashWithSaltBytes, SaltSize);
             return GenerateHash(data.ToBytes(), salt).ByteArrayEqual(hash);
+        }
+
+        public static byte[] GenerateHashByRfc2898(byte[] data, int hashSize)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            using (var algorithm = new Rfc2898DeriveBytes(data, new byte[16], 10000))
+            {
+                return algorithm.GetBytes(hashSize);
+            }
+        }
+
+        public static string GenerateHashByRfc2898(string data, int hashSize)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            return Convert.ToBase64String(GenerateHashByRfc2898(data.ToBytes(), hashSize));
         }
     }
 }
