@@ -57,6 +57,19 @@ namespace UnitTest.Cryptography
         }
 
         [TestMethod]
+        public void EncryptByPassword()
+        {
+            var data = Convert.ToBase64String(CryptoHelper.GenerateBytes(100));
+            var password = "P@ssw0rd";
+
+            var encrypted = SymmetricEncryption.EncryptByPassword(data, password);
+            var decrypted = SymmetricEncryption.DecryptByPassword(encrypted, password);
+
+            Console.WriteLine(encrypted);
+            Assert.AreEqual(data, decrypted);
+        }
+
+        [TestMethod]
         public void Encrypt_Stream_Short()
         {
             Encrypt_Stream(100);
