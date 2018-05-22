@@ -62,8 +62,8 @@ namespace UnitTest.Cryptography
             var data = Convert.ToBase64String(CryptoHelper.GenerateBytes(100));
             var password = "P@ssw0rd";
 
-            var encrypted = SymmetricEncryption.EncryptByPassword(data, password);
-            var decrypted = SymmetricEncryption.DecryptByPassword(encrypted, password);
+            var encrypted = SymmetricEncryptionEx.EncryptByPassword(data, password);
+            var decrypted = SymmetricEncryptionEx.DecryptByPassword(encrypted, password);
 
             Console.WriteLine(encrypted);
             Assert.AreEqual(data, decrypted);
