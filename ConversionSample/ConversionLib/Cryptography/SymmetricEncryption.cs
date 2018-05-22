@@ -13,7 +13,7 @@ namespace ConversionLib.Cryptography
 
         static SymmetricAlgorithm CreateAlgorithm() => new RijndaelManaged();
 
-        static SymmetricAlgorithm CreateAlgorithm(byte[] key)
+        internal static SymmetricAlgorithm CreateAlgorithm(byte[] key)
         {
             var algorithm = CreateAlgorithm();
             algorithm.Key = key;
