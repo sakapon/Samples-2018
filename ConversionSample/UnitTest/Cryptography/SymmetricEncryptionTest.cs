@@ -32,6 +32,18 @@ namespace UnitTest.Cryptography
         }
 
         [TestMethod]
+        [ExpectedException(typeof(CryptographicException))]
+        public void Encrypt_Wrong()
+        {
+            var data = "P@ssw0rd";
+            var key = SymmetricEncryption.GenerateKeyBase64();
+            var key2 = SymmetricEncryption.GenerateKeyBase64();
+
+            var encrypted = SymmetricEncryption.Encrypt(data, key);
+            var decrypted2 = SymmetricEncryption.Decrypt(encrypted, key2);
+        }
+
+        [TestMethod]
         public void Encrypt_Old()
         {
             var data = "P@ssw0rd";
