@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -23,8 +24,10 @@ namespace ConversionLib.Cryptography
         public static string GenerateBase64(int size) => Convert.ToBase64String(GenerateBytes(size));
 
         // The Encoding.UTF8.GetBytes method does not prepend a preamble to the encoded byte sequence.
-        internal static byte[] ToBytes(this string data) => Encoding.UTF8.GetBytes(data);
-        internal static string ToText(this byte[] data) => Encoding.UTF8.GetString(data);
+        [DebuggerHidden]
+        internal static byte[] ToBytes(this string text) => Encoding.UTF8.GetBytes(text);
+        [DebuggerHidden]
+        internal static string ToText(this byte[] bytes) => Encoding.UTF8.GetString(bytes);
 
         internal static void Concat(byte[] b1, byte[] b2, out byte[] result)
         {
