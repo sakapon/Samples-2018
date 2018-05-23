@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using ConversionLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetWebUtility = System.Net.WebUtility;
@@ -14,6 +15,8 @@ namespace UnitTest
         // 33 symbols
         static readonly string SymbolChars = string.Concat(Enumerable.Range(32, 127 - 32).Select(i => (char)(short)i).Where(c => !char.IsLetter(c) && !char.IsNumber(c)));
         const string RFC3986_UnreservedChars = "-._~";
+        const string RFC3986_ReservedChars = "!#$&'()*+,/:;=?@[]";
+        const string RFC3986_OtherChars = " \"%<>\\^`{|}";
         const string UrlStandard_PercentEncodeSet = " \"#<>`{}~";
 
         [TestMethod]
@@ -84,6 +87,21 @@ namespace UnitTest
         {
             var actual = SymbolChars.UrlEncodeForForm().UrlDecodeForForm();
             Assert.AreEqual(SymbolChars, actual);
+        }
+
+        [TestMethod]
+        public void FormUrlEncodedContent_1()
+        {
+            var data = new Dictionary<string, string>
+            {
+                { "unreserved", RFC3986_UnreservedChars },
+                { "reserved", RFC3986_ReservedChars },
+                { "others", RFC3986_OtherChars },
+            };
+            var content = new FormUrlEncodedContent(data);
+            var form = content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            Console.WriteLine(form);
         }
 
         [TestMethod]
