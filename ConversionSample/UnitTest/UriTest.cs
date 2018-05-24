@@ -28,26 +28,20 @@ namespace UnitTest
         [TestMethod]
         public void EscapeDataString_RFC3986()
         {
-            var unchanged = SymbolChars
-                .Select(c => c.ToString())
-                .Select(c => new { c, e = Uri.EscapeDataString(c) })
-                .Where(_ => _.c == _.e)
-                .Select(_ => _.c)
-                .ConcatStrings();
-
-            Assert.AreEqual(RFC3986_UnreservedChars, unchanged);
+            Assert.AreEqual(RFC3986_UnreservedChars, Uri.EscapeDataString(RFC3986_UnreservedChars));
+            Assert.AreEqual(TextHelper.PercentEncode(RFC3986_ReservedChars), Uri.EscapeDataString(RFC3986_ReservedChars));
+            Assert.AreEqual(TextHelper.PercentEncode(RFC3986_OtherChars), Uri.EscapeDataString(RFC3986_OtherChars));
+            Assert.AreEqual(TextHelper.PercentEncode("あ"), Uri.EscapeDataString("あ"));
         }
 
         [TestMethod]
-        public void EscapeDataString_JP()
+        public void EscapeUriString_RFC3986()
         {
-            Assert.AreEqual("%E3%81%82", Uri.EscapeDataString("あ"));
-        }
-
-        [TestMethod]
-        public void EscapeUriString_1()
-        {
-            Console.WriteLine(Uri.EscapeUriString("https://abc.xyz/" + SymbolChars));
+            var domain = "https://abc.xyz/";
+            Assert.AreEqual(domain + RFC3986_UnreservedChars, Uri.EscapeUriString(domain + RFC3986_UnreservedChars));
+            Assert.AreEqual(domain + RFC3986_ReservedChars, Uri.EscapeUriString(domain + RFC3986_ReservedChars));
+            Assert.AreEqual(domain + TextHelper.PercentEncode(RFC3986_OtherChars), Uri.EscapeUriString(domain + RFC3986_OtherChars));
+            Assert.AreEqual(domain + TextHelper.PercentEncode("あ"), Uri.EscapeUriString(domain + "あ"));
         }
 
         [TestMethod]
