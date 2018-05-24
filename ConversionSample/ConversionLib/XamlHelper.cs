@@ -10,14 +10,14 @@ namespace ConversionLib
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
 
-            return XamlServices.Save(obj).Encode(Encoding.UTF8);
+            return XamlServices.Save(obj).EncodeText(Encoding.UTF8);
         }
 
         public static T DeserializeByXaml<T>(this byte[] binary)
         {
             if (binary == null) throw new ArgumentNullException(nameof(binary));
 
-            return (T)XamlServices.Parse(binary.Decode(Encoding.UTF8));
+            return (T)XamlServices.Parse(binary.DecodeText(Encoding.UTF8));
         }
     }
 }

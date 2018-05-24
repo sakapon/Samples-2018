@@ -8,7 +8,7 @@ namespace ConversionLib
 {
     public static class TextHelper
     {
-        public static byte[] Encode(this string text, Encoding encoding)
+        public static byte[] EncodeText(this string text, Encoding encoding)
         {
             if (text == null) throw new ArgumentNullException(nameof(text));
             if (encoding == null) throw new ArgumentNullException(nameof(encoding));
@@ -16,7 +16,7 @@ namespace ConversionLib
             return encoding.GetBytes(text);
         }
 
-        public static string Decode(this byte[] binary, Encoding encoding)
+        public static string DecodeText(this byte[] binary, Encoding encoding)
         {
             if (binary == null) throw new ArgumentNullException(nameof(binary));
             if (encoding == null) throw new ArgumentNullException(nameof(encoding));
@@ -77,6 +77,11 @@ namespace ConversionLib
         {
             return dateTime.ToString("O", CultureInfo.InvariantCulture);
         }
+
+        public static string PercentEncode(this string value) =>
+            value.EncodeText(Encoding.UTF8)
+                .Select(b => "%" + b.ToString("X2"))
+                .ConcatStrings();
 
         public static string UrlEncode(this string value) =>
             Uri.EscapeDataString(value ?? "");

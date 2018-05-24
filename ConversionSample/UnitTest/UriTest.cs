@@ -14,10 +14,16 @@ namespace UnitTest
     {
         // 33 symbols
         static readonly string SymbolChars = string.Concat(Enumerable.Range(32, 127 - 32).Select(i => (char)(short)i).Where(c => !char.IsLetter(c) && !char.IsNumber(c)));
-        const string RFC3986_UnreservedChars = "-._~";
-        const string RFC3986_ReservedChars = "!#$&'()*+,/:;=?@[]";
-        const string RFC3986_OtherChars = " \"%<>\\^`{|}";
+        const string RFC3986_UnreservedChars = "-._~"; // 4 symbols
+        const string RFC3986_ReservedChars = "!#$&'()*+,/:;=?@[]"; // 18 symbols
+        const string RFC3986_OtherChars = " \"%<>\\^`{|}"; // 11 symbols
         const string UrlStandard_PercentEncodeSet = " \"#<>`{}~";
+
+        [TestMethod]
+        public void PercentEncode()
+        {
+            Assert.AreEqual("%20%21%2D%E3%81%82", TextHelper.PercentEncode(" !-あ"));
+        }
 
         [TestMethod]
         public void EscapeDataString_RFC3986()
