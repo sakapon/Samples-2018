@@ -45,6 +45,30 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void FormUrlEncodedContent_RFC3986()
+        {
+            var expected = $"unreserved={RFC3986_UnreservedChars}&reserved={TextHelper.PercentEncode(RFC3986_ReservedChars)}&others={TextHelper.PercentEncode(RFC3986_OtherChars).Replace("%20", "+")}";
+
+            var data = new Dictionary<string, string>
+            {
+                { "unreserved", RFC3986_UnreservedChars },
+                { "reserved", RFC3986_ReservedChars },
+                { "others", RFC3986_OtherChars },
+            };
+            var actual = ToFormUrlEncoded(data);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        static string ToFormUrlEncoded(IEnumerable<KeyValuePair<string, string>> nameValueCollection)
+        {
+            using (var content = new FormUrlEncodedContent(nameValueCollection))
+            {
+                return content.ReadAsStringAsync().GetAwaiter().GetResult();
+            }
+        }
+
+        [TestMethod]
         public void UrlEncode_1()
         {
             Console.WriteLine(SymbolChars);
@@ -87,21 +111,6 @@ namespace UnitTest
         {
             var actual = SymbolChars.UrlEncodeForForm().UrlDecodeForForm();
             Assert.AreEqual(SymbolChars, actual);
-        }
-
-        [TestMethod]
-        public void FormUrlEncodedContent_1()
-        {
-            var data = new Dictionary<string, string>
-            {
-                { "unreserved", RFC3986_UnreservedChars },
-                { "reserved", RFC3986_ReservedChars },
-                { "others", RFC3986_OtherChars },
-            };
-            var content = new FormUrlEncodedContent(data);
-            var form = content.ReadAsStringAsync().GetAwaiter().GetResult();
-
-            Console.WriteLine(form);
         }
 
         [TestMethod]
