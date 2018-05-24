@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using ConversionLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetWebUtility = System.Net.WebUtility;
@@ -55,17 +54,9 @@ namespace UnitTest
                 { "reserved", RFC3986_ReservedChars },
                 { "others", RFC3986_OtherChars },
             };
-            var actual = ToFormUrlEncoded(data);
+            var actual = TextHelper.ToFormUrlEncoded(data);
 
             Assert.AreEqual(expected, actual);
-        }
-
-        static string ToFormUrlEncoded(IEnumerable<KeyValuePair<string, string>> nameValueCollection)
-        {
-            using (var content = new FormUrlEncodedContent(nameValueCollection))
-            {
-                return content.ReadAsStringAsync().GetAwaiter().GetResult();
-            }
         }
 
         [TestMethod]
