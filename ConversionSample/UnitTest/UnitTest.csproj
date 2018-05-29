@@ -56,7 +56,7 @@
     <Compile Include="Cryptography\SymmetricEncryptionTest.cs" />
     <Compile Include="Cryptography\HybridEncryptionTest.cs" />
     <Compile Include="Cryptography\SymmetricEncryptionExTest.cs" />
-    <Compile Include="Cryptography\CryptographySampleTest.cs" />
+    <Compile Include="Cryptography\SampleTest.cs" />
     <Compile Include="IO\CompressionHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextHelperTest.cs" />

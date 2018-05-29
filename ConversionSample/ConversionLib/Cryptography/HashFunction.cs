@@ -25,7 +25,6 @@ namespace ConversionLib.Cryptography
 
             using (var algorithm = new SHA256Managed())
             {
-                // The result has 256 bits.
                 return algorithm.ComputeHash(data);
             }
         }
@@ -37,7 +36,6 @@ namespace ConversionLib.Cryptography
 
             using (var algorithm = new HMACSHA256(salt))
             {
-                // The result has 256 bits.
                 return algorithm.ComputeHash(data);
             }
         }

@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTest.Cryptography
 {
     [TestClass]
-    public class CryptographySampleTest
+    public class SampleTest
     {
         [TestMethod]
         public void SHA1_123456()
