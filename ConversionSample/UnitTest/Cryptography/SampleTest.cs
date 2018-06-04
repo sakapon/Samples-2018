@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using ConversionLib.Cryptography;
@@ -63,5 +65,42 @@ namespace UnitTest.Cryptography
                 Assert.AreEqual(expected, result);
             }
         }
+
+        [TestMethod]
+        public void BruteForceAttack_SHA256Hash()
+        {
+            HashFunctions.Algorithm = new SHA256Hash();
+            BruteForceAttack();
+        }
+
+        [TestMethod]
+        public void BruteForceAttack_Rfc2898Hash()
+        {
+            HashFunctions.Algorithm = new Rfc2898Hash();
+            BruteForceAttack();
+        }
+
+        static void BruteForceAttack()
+        {
+            var password = "abc";
+            var salt = HashFunctions.GenerateSaltBase64();
+            var hash = HashFunctions.GenerateHash(password, salt);
+            Console.WriteLine(hash);
+
+            var solved = GetPasswords(password.Length)
+                .First(s => HashFunctions.VerifyByHash(s, salt, hash));
+            Assert.AreEqual(password, solved);
+        }
+
+        const string PasswordChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        static IEnumerable<string> GetPasswords(int length)
+        {
+            if (length == 0) return new[] { "" };
+            return GetPasswords(length - 1).SelectMany(AddChar);
+        }
+
+        static IEnumerable<string> AddChar(string predecessor) =>
+            PasswordChars.Select(c => predecessor + c);
     }
 }
