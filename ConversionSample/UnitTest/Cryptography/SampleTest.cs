@@ -70,13 +70,15 @@ namespace UnitTest.Cryptography
         [TestMethod]
         public void BruteForceAttack_SHA256Hash()
         {
-            BruteForceAttack(new SHA256Hash());
+            //BruteForceAttack(new SHA256Hash());
+            BruteForceAttack_Parallel(new SHA256Hash());
         }
 
         [TestMethod]
         public void BruteForceAttack_Rfc2898Hash()
         {
-            BruteForceAttack(new Rfc2898Hash());
+            //BruteForceAttack(new Rfc2898Hash());
+            BruteForceAttack_Parallel(new Rfc2898Hash());
         }
 
         static void BruteForceAttack(HashFunctionBase algorithm)
@@ -97,11 +99,12 @@ namespace UnitTest.Cryptography
             var hash = algorithm.GenerateHash(password.ToBytes(), salt);
 
             string solved = null;
-            Parallel.ForEach(GetPasswords(password.Length), s =>
+            Parallel.ForEach(GetPasswords(password.Length), (s, state) =>
             {
-                if (solved != null) return;
-                if (CryptoHelper.ByteArrayEqual(algorithm.GenerateHash(s.ToBytes(), salt), hash))
-                    solved = s;
+                if (!CryptoHelper.ByteArrayEqual(algorithm.GenerateHash(s.ToBytes(), salt), hash)) return;
+
+                solved = s;
+                state.Stop();
             });
             Assert.AreEqual(password, solved);
         }
