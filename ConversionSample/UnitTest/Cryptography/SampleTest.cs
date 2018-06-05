@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using ConversionLib.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -86,6 +87,22 @@ namespace UnitTest.Cryptography
 
             var solved = GetPasswords(password.Length)
                 .First(s => CryptoHelper.ByteArrayEqual(algorithm.GenerateHash(s.ToBytes(), salt), hash));
+            Assert.AreEqual(password, solved);
+        }
+
+        static void BruteForceAttack_Parallel(HashFunctionBase algorithm)
+        {
+            var password = "abc";
+            var salt = CryptoHelper.GenerateBytes(algorithm.SaltSize);
+            var hash = algorithm.GenerateHash(password.ToBytes(), salt);
+
+            string solved = null;
+            Parallel.ForEach(GetPasswords(password.Length), s =>
+            {
+                if (solved != null) return;
+                if (CryptoHelper.ByteArrayEqual(algorithm.GenerateHash(s.ToBytes(), salt), hash))
+                    solved = s;
+            });
             Assert.AreEqual(password, solved);
         }
 
