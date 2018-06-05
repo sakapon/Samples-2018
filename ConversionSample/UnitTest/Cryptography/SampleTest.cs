@@ -69,26 +69,23 @@ namespace UnitTest.Cryptography
         [TestMethod]
         public void BruteForceAttack_SHA256Hash()
         {
-            HashFunctions.Algorithm = new SHA256Hash();
-            BruteForceAttack();
+            BruteForceAttack(new SHA256Hash());
         }
 
         [TestMethod]
         public void BruteForceAttack_Rfc2898Hash()
         {
-            HashFunctions.Algorithm = new Rfc2898Hash();
-            BruteForceAttack();
+            BruteForceAttack(new Rfc2898Hash());
         }
 
-        static void BruteForceAttack()
+        static void BruteForceAttack(HashFunctionBase algorithm)
         {
             var password = "abc";
-            var salt = HashFunctions.GenerateSaltBase64();
-            var hash = HashFunctions.GenerateHash(password, salt);
-            Console.WriteLine(hash);
+            var salt = CryptoHelper.GenerateBytes(algorithm.SaltSize);
+            var hash = algorithm.GenerateHash(password.ToBytes(), salt);
 
             var solved = GetPasswords(password.Length)
-                .First(s => HashFunctions.VerifyByHash(s, salt, hash));
+                .First(s => CryptoHelper.ByteArrayEqual(algorithm.GenerateHash(s.ToBytes(), salt), hash));
             Assert.AreEqual(password, solved);
         }
 
