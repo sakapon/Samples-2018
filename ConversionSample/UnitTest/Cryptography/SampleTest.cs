@@ -83,7 +83,7 @@ namespace UnitTest.Cryptography
 
         static void BruteForceAttack(HashFunctionBase algorithm)
         {
-            var password = "abc";
+            var password = "024";
             var salt = CryptoHelper.GenerateBytes(algorithm.SaltSize);
             var hash = algorithm.GenerateHash(password.ToBytes(), salt);
 
@@ -94,7 +94,7 @@ namespace UnitTest.Cryptography
 
         static void BruteForceAttack_Parallel(HashFunctionBase algorithm)
         {
-            var password = "abc";
+            var password = "024";
             var salt = CryptoHelper.GenerateBytes(algorithm.SaltSize);
             var hash = algorithm.GenerateHash(password.ToBytes(), salt);
 
