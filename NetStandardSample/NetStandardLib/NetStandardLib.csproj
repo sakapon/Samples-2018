@@ -5,12 +5,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.1</Version>
     <Title>Net Standard Lib</Title>
-    <Authors>Keiho Sakapon</Authors>
     <Product>Net Standard Sample</Product>
     <Description>This is the description.</Description>
+    <Authors>Keiho Sakapon</Authors>
     <Copyright>© 2018 Keiho Sakapon</Copyright>
-    <PackageLicenseUrl>https://github.com/sakapon/Samples-2018/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/sakapon/Samples-2018</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/sakapon/Samples-2018/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>netstandard sample</PackageTags>
     <PackageReleaseNotes>The first release.</PackageReleaseNotes>
   </PropertyGroup>
