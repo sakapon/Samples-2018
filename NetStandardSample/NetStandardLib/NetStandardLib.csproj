@@ -5,6 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.1</Version>
     <Title>Net Standard Lib</Title>
+    <AssemblyTitle>Net Standard Lib</AssemblyTitle>
     <Product>Net Standard Sample</Product>
     <Description>This is the description.</Description>
     <Authors>Keiho Sakapon</Authors>
