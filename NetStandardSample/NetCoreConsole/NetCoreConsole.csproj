@@ -3,6 +3,10 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.0;net45</TargetFrameworks>
+    <Version>1.0.1</Version>
+    <Authors>Keiho Sakapon</Authors>
+    <Product>Net Standard Sample</Product>
+    <Copyright>© 2018 Keiho Sakapon</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
