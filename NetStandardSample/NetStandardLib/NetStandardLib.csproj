@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
+    <Title>Net Standard Lib</Title>
+    <AssemblyTitle>Net Standard Lib</AssemblyTitle>
+    <Product>Net Standard Sample</Product>
+    <Description>This is the description.</Description>
+    <Authors>Keiho Sakapon</Authors>
+    <Copyright>© 2018 Keiho Sakapon</Copyright>
+    <PackageProjectUrl>https://github.com/sakapon/Samples-2018</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/sakapon/Samples-2018/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>netstandard sample</PackageTags>
+    <PackageReleaseNotes>The first release.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\NetStandardLib.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <DocumentationFile>bin\Release\net40\NetStandardLib.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
