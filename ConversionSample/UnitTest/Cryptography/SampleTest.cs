@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using ConversionLib.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -63,5 +66,58 @@ namespace UnitTest.Cryptography
                 Assert.AreEqual(expected, result);
             }
         }
+
+        [TestMethod]
+        public void BruteForceAttack_SHA256Hash()
+        {
+            //BruteForceAttack(new SHA256Hash());
+            BruteForceAttack_Parallel(new SHA256Hash());
+        }
+
+        [TestMethod]
+        public void BruteForceAttack_Rfc2898Hash()
+        {
+            //BruteForceAttack(new Rfc2898Hash());
+            BruteForceAttack_Parallel(new Rfc2898Hash());
+        }
+
+        static void BruteForceAttack(HashFunctionBase algorithm)
+        {
+            var password = "024";
+            var salt = CryptoHelper.GenerateBytes(algorithm.SaltSize);
+            var hash = algorithm.GenerateHash(password.ToBytes(), salt);
+
+            var solved = GetPasswords(password.Length)
+                .First(s => CryptoHelper.ByteArrayEqual(algorithm.GenerateHash(s.ToBytes(), salt), hash));
+            Assert.AreEqual(password, solved);
+        }
+
+        static void BruteForceAttack_Parallel(HashFunctionBase algorithm)
+        {
+            var password = "024";
+            var salt = CryptoHelper.GenerateBytes(algorithm.SaltSize);
+            var hash = algorithm.GenerateHash(password.ToBytes(), salt);
+
+            string solved = null;
+            Parallel.ForEach(GetPasswords(password.Length), (s, state) =>
+            {
+                if (!CryptoHelper.ByteArrayEqual(algorithm.GenerateHash(s.ToBytes(), salt), hash)) return;
+
+                solved = s;
+                state.Stop();
+            });
+            Assert.AreEqual(password, solved);
+        }
+
+        const string PasswordChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        static IEnumerable<string> GetPasswords(int length)
+        {
+            if (length == 0) return new[] { "" };
+            return GetPasswords(length - 1).SelectMany(AddChar);
+        }
+
+        static IEnumerable<string> AddChar(string predecessor) =>
+            PasswordChars.Select(c => predecessor + c);
     }
 }

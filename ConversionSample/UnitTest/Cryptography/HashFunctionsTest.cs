@@ -127,5 +127,13 @@ namespace UnitTest.Cryptography
             Assert.IsFalse(HashFunctions.VerifyByHashWithSalt(data2, hash));
             Assert.IsFalse(HashFunctions.VerifyByHashWithSalt(data, hash2));
         }
+
+        [TestMethod]
+        public void GenerateHash_Long()
+        {
+            var data = CryptoHelper.GenerateBytes(1000);
+            var hash = HashFunctions.GenerateHash(data);
+            Assert.AreEqual(HashFunctions.HashSize, hash.Length);
+        }
     }
 }
