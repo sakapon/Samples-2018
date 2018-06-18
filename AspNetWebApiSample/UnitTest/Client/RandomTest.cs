@@ -57,7 +57,7 @@ namespace UnitTest.Client
         {
             using (var http = new HttpClient { BaseAddress = HttpHelper.BaseUri })
             {
-                var response = await http.GetAsync(HttpHelper.AddQuery("api/Random/NewInteger", new RangeInfo { MinValue = 20, MaxValue = 10 }));
+                var response = await http.GetAsync("api/Random/NewInteger".AddQuery(new RangeInfo { MinValue = 20, MaxValue = 10 }));
                 Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             }
         }
