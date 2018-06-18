@@ -19,6 +19,11 @@ namespace SampleWebApi.Controllers
             return id;
         }
 
+        // GET api/uriquery/wildcard/hello
+        [HttpGet]
+        [Route("api/UriQuery/Wildcard/{*id}")]
+        public string Wildcard(string id) => Get(id);
+
         // POST api/uriquery
         public string Post(Person person)
         {

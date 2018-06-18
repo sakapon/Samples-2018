@@ -46,11 +46,11 @@ namespace UnitTest.Client
                 Assert.AreEqual(id, result);
             }
 
+            var chars = Rfc3986_UnreservedChars + Rfc3986_ReservedChars + Rfc3986_OtherChars;
+
             // 12 symbols are unavailable.
             // .&*+/:? %<>\
             Console.WriteLine("Unavailable:");
-
-            var chars = Rfc3986_UnreservedChars + Rfc3986_ReservedChars + Rfc3986_OtherChars;
             foreach (var c in chars)
             {
                 try
@@ -62,6 +62,68 @@ namespace UnitTest.Client
                     Console.Write(c);
                 }
             }
+            Console.WriteLine();
+
+            // 11 symbols are unavailable.
+            // .&*+/:?%<>\
+            Console.WriteLine("Unavailable:");
+            foreach (var c in chars)
+            {
+                try
+                {
+                    Test($"a{c}z");
+                }
+                catch (Exception)
+                {
+                    Console.Write(c);
+                }
+            }
+            Console.WriteLine();
+        }
+
+        [TestMethod]
+        public void Get_Uri_Availablity_Wildcard()
+        {
+            void Test(string id)
+            {
+                var uri = "api/uriquery/wildcard/{0}".FormatUri(id);
+                var result = HttpHelper.GetAsync<string>(uri).GetAwaiter().GetResult();
+                Assert.AreEqual(id, result);
+            }
+
+            var chars = Rfc3986_UnreservedChars + Rfc3986_ReservedChars + Rfc3986_OtherChars;
+
+            // 12 symbols are unavailable.
+            // .&*+/:? %<>\
+            Console.WriteLine("Unavailable:");
+            foreach (var c in chars)
+            {
+                try
+                {
+                    Test(c.ToString());
+                }
+                catch (Exception)
+                {
+                    Console.Write(c);
+                }
+            }
+            Console.WriteLine();
+
+            // 10 symbols are unavailable.
+            // .&*+:?%<>\
+            Console.WriteLine("Unavailable:");
+            foreach (var c in chars)
+            {
+                try
+                {
+                    Test($"a{c}z");
+                }
+                catch (Exception)
+                {
+                    Console.Write(c);
+                }
+            }
+            Console.WriteLine();
         }
 
         [TestMethod]
@@ -81,6 +143,7 @@ namespace UnitTest.Client
             Test(Rfc3986_ReservedChars);
             Test(Rfc3986_OtherChars);
             Test("あ");
+            Test("Hello, the \"World+\".");
         }
 
         [TestMethod]
@@ -97,6 +160,7 @@ namespace UnitTest.Client
             Test(Rfc3986_ReservedChars);
             Test(Rfc3986_OtherChars);
             Test("あ");
+            Test("Hello, the \"World+\".");
         }
     }
 }
