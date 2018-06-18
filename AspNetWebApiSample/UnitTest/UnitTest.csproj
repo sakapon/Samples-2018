@@ -104,6 +104,7 @@
     <Compile Include="Client\PeopleTest.cs" />
     <Compile Include="Client\RandomTest.cs" />
     <Compile Include="Client\RandomTextTest.cs" />
+    <Compile Include="Client\UriQueryTest.cs" />
     <Compile Include="Client\UriHelper.cs" />
     <Compile Include="Client\ValuesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
