@@ -11,6 +11,10 @@ namespace UnitTest.Client
         const string Rfc3986_ReservedChars = "!#$&'()*+,/:;=?@[]"; // 18 symbols
         const string Rfc3986_OtherChars = " \"%<>\\^`{|}"; // 11 symbols
 
+        const string Rfc3986_UnreservedChars_Uri = "-_~"; // 3 symbols
+        const string Rfc3986_ReservedChars_Uri = "!#$'(),;=@[]"; // 12 symbols
+        const string Rfc3986_OtherChars_Uri = "\"^`{|}"; // 6 symbols
+
         [TestMethod]
         public void Get_Uri()
         {
@@ -24,11 +28,40 @@ namespace UnitTest.Client
             }
 
             // Percent Encoding しても使用できない文字があります。
+            // .&*+/:? %<>\
             Test(Alphanumerics);
-            Test(Rfc3986_UnreservedChars);
-            Test(Rfc3986_ReservedChars);
-            Test(Rfc3986_OtherChars);
+            Test(Rfc3986_UnreservedChars_Uri);
+            Test(Rfc3986_ReservedChars_Uri);
+            Test(Rfc3986_OtherChars_Uri);
             Test("あ");
+        }
+
+        [TestMethod]
+        public void Get_Uri_Availablity()
+        {
+            void Test(string id)
+            {
+                var uri = "api/uriquery/{0}".FormatUri(id);
+                var result = HttpHelper.GetAsync<string>(uri).GetAwaiter().GetResult();
+                Assert.AreEqual(id, result);
+            }
+
+            // 12 symbols are unavailable.
+            // .&*+/:? %<>\
+            Console.WriteLine("Unavailable:");
+
+            var chars = Rfc3986_UnreservedChars + Rfc3986_ReservedChars + Rfc3986_OtherChars;
+            foreach (var c in chars)
+            {
+                try
+                {
+                    Test(c.ToString());
+                }
+                catch (Exception)
+                {
+                    Console.Write(c);
+                }
+            }
         }
 
         [TestMethod]
