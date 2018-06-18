@@ -17,7 +17,7 @@ namespace SampleWebApi.Controllers
         static readonly Random random = new Random();
 
         /// <summary>
-        /// Echo the specified value.
+        /// Echoes the specified value.
         /// </summary>
         /// <param name="i">A value.</param>
         /// <returns>The value.</returns>

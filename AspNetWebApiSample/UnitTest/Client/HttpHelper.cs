@@ -10,6 +10,7 @@ namespace UnitTest.Client
     public static class HttpHelper
     {
         public static readonly Uri BaseUri = new Uri("http://localhost:1961/");
+        //public static readonly Uri BaseUri = new Uri("http://localhost.fiddler:1961/");
 
         async public static Task<T> GetAsync<T>(string uri)
         {
@@ -22,7 +23,7 @@ namespace UnitTest.Client
         }
 
         public static Task<T> GetAsync<T>(string uri, object query) =>
-            GetAsync<T>(AddQuery(uri, query));
+            GetAsync<T>(uri.AddQuery(query));
 
         async public static Task PostAsFormAsync(string uri, object value)
         {
@@ -99,18 +100,5 @@ namespace UnitTest.Client
                 return await response.Content.ReadAsAsync<T>();
             }
         }
-
-        public static string AddQuery(string uri, object query) => $"{uri}?{ToFormUrlEncoded(query)}";
-
-        public static string ToFormUrlEncoded(this object value)
-        {
-            using (var content = new FormUrlEncodedContent(value.EnumerateProperties()))
-                return content.ReadAsStringAsync().GetAwaiter().GetResult();
-        }
-
-        public static IEnumerable<KeyValuePair<string, string>> EnumerateProperties(this object value) =>
-             TypeDescriptor.GetProperties(value)
-                .Cast<PropertyDescriptor>()
-                .Select(d => new KeyValuePair<string, string>(d.Name, d.GetValue(value)?.ToString()));
     }
 }
