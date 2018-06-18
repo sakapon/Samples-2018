@@ -147,11 +147,28 @@ namespace UnitTest.Client
         }
 
         [TestMethod]
-        public void Post()
+        public void Post_Form()
         {
             void Test(string name)
             {
                 var result = HttpHelper.PostAsFormAsync<string>("api/uriquery", new { name }).GetAwaiter().GetResult();
+                Assert.AreEqual(name, result);
+            }
+
+            Test(Alphanumerics);
+            Test(Rfc3986_UnreservedChars);
+            Test(Rfc3986_ReservedChars);
+            Test(Rfc3986_OtherChars);
+            Test("あ");
+            Test("Hello, the \"World+\".");
+        }
+
+        [TestMethod]
+        public void Post_Json()
+        {
+            void Test(string name)
+            {
+                var result = HttpHelper.PostAsJsonAsync<string>("api/uriquery", new { name }).GetAwaiter().GetResult();
                 Assert.AreEqual(name, result);
             }
 
