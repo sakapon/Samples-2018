@@ -1,6 +1,5 @@
 ﻿using System;
 using NetStandardLib;
-using Newtonsoft.Json;
 
 namespace NetCoreConsole
 {
@@ -8,7 +7,7 @@ namespace NetCoreConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(RandomHelper.GenerateBase64(16)));
+            Console.WriteLine(RandomHelper.GenerateBase64(16));
             Console.WriteLine("Press [Enter] key to exit.");
             Console.ReadLine();
         }
