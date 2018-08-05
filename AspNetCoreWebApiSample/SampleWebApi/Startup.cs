@@ -37,6 +37,8 @@ namespace SampleWebApi
         {
             services.AddCors();
             services.AddMvc();
+            // Supports XML:
+            //services.AddMvc().AddXmlSerializerFormatters();
 
             // Register the Swagger generator, defining 1 or more Swagger documents.
             services.AddSwaggerGen(c =>
