@@ -9,7 +9,6 @@ namespace SampleWebApi.Controllers
     /// <summary>
     /// Represents string data.
     /// </summary>
-    [Produces("application/json")]
     //[Produces("application/json", "application/xml")]
     [Route("api/[controller]")]
     public class ValuesController : Controller

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -36,7 +37,11 @@ namespace SampleWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.OutputFormatters.RemoveType<StringOutputFormatter>();
+                options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+            });
             // Supports XML:
             //services.AddMvc().AddXmlSerializerFormatters();
 
