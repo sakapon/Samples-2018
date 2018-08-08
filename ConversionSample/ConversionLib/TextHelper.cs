@@ -96,12 +96,13 @@ namespace ConversionLib
         public static string UrlDecodeForForm(this string value) =>
             (value ?? "").Replace("+", "%20").UrlDecode();
 
-        public static string ToFormUrlEncoded(IEnumerable<KeyValuePair<string, string>> nameValueCollection)
+        public static string ToFormUrlEncoded(this IDictionary<string, string> data)
         {
-            using (var content = new FormUrlEncodedContent(nameValueCollection))
-            {
+            using (var content = new FormUrlEncodedContent(data))
                 return content.ReadAsStringAsync().GetAwaiter().GetResult();
-            }
         }
+
+        public static string AddQuery(this string uri, IDictionary<string, string> data) =>
+            $"{uri}?{data.ToFormUrlEncoded()}";
     }
 }
