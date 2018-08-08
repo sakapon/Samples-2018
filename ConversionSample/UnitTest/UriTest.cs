@@ -42,11 +42,14 @@ namespace UnitTest
             Assert.AreEqual(domain + UriHelper.PercentEncode(RFC3986_OtherChars), Uri.EscapeUriString(domain + RFC3986_OtherChars));
             Assert.AreEqual(domain + UriHelper.PercentEncode("あ"), Uri.EscapeUriString(domain + "あ"));
 
+            // クエリ文字列も同様に変換されます。application/x-www-form-urlencoded には変換されません。
+            Assert.AreEqual(domain + "?q=%5C", Uri.EscapeUriString(domain + "?q=\\"));
+            Assert.AreEqual(domain + "?q=Hello~,%20World!", Uri.EscapeUriString(domain + "?q=Hello~, World!"));
+
             Assert.AreEqual(domain + "%252", Uri.EscapeUriString(domain + "%2"));
             Assert.AreEqual(domain + "%2525", Uri.EscapeUriString(domain + "%25"));
-
-            // クエリ文字列も同様に変換されます。application/x-www-form-urlencoded には変換されません。
-            Assert.AreEqual(domain + "?q=Hello~,%20World!", Uri.EscapeUriString(domain + "?q=Hello~, World!"));
+            Assert.AreEqual(domain + "?q=%252", Uri.EscapeUriString(domain + "?q=%2"));
+            Assert.AreEqual(domain + "?q=%2525", Uri.EscapeUriString(domain + "?q=%25"));
         }
 
         [TestMethod]
