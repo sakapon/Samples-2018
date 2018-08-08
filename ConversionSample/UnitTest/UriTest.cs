@@ -21,7 +21,7 @@ namespace UnitTest
         [TestMethod]
         public void PercentEncode()
         {
-            Assert.AreEqual("%20%21%2D%E3%81%82", UriHelper.PercentEncode(" !-あ"));
+            Assert.AreEqual("%20%21%2D%E3%81%82", " !-あ".PercentEncode());
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace UnitTest
         [TestMethod]
         public void FormUrlEncodedContent_RFC3986()
         {
-            var expected = $"unreserved={RFC3986_UnreservedChars}&reserved={UriHelper.PercentEncode(RFC3986_ReservedChars)}&others={UriHelper.PercentEncode(RFC3986_OtherChars).Replace("%20", "+")}";
+            var expected = $"unreserved={RFC3986_UnreservedChars}&reserved={RFC3986_ReservedChars.PercentEncode()}&others={RFC3986_OtherChars.PercentEncode().Replace("%20", "+")}";
 
             var data = new Dictionary<string, string>
             {
