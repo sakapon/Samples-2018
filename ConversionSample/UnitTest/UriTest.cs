@@ -41,6 +41,23 @@ namespace UnitTest
             Assert.AreEqual(domain + RFC3986_ReservedChars, Uri.EscapeUriString(domain + RFC3986_ReservedChars));
             Assert.AreEqual(domain + TextHelper.PercentEncode(RFC3986_OtherChars), Uri.EscapeUriString(domain + RFC3986_OtherChars));
             Assert.AreEqual(domain + TextHelper.PercentEncode("あ"), Uri.EscapeUriString(domain + "あ"));
+
+            // クエリ文字列も同様に変換されます。application/x-www-form-urlencoded には変換されません。
+            Assert.AreEqual(domain + "?q=Hello~,%20World!", Uri.EscapeUriString(domain + "?q=Hello~, World!"));
+        }
+
+        [TestMethod]
+        public void Uri_RFC3986()
+        {
+            var domain = "https://abc.xyz/";
+            Assert.AreEqual(domain + RFC3986_UnreservedChars, new Uri(domain + RFC3986_UnreservedChars).AbsoluteUri);
+            Assert.AreEqual(domain + RFC3986_ReservedChars, new Uri(domain + RFC3986_ReservedChars).AbsoluteUri);
+            // Uri クラスでは \ が / に変換されます。
+            Assert.AreEqual($"{domain}{TextHelper.PercentEncode(" \"%<>")}/{TextHelper.PercentEncode("^`{|}")}", new Uri(domain + RFC3986_OtherChars).AbsoluteUri);
+            Assert.AreEqual(domain + TextHelper.PercentEncode("あ"), new Uri(domain + "あ").AbsoluteUri);
+
+            // クエリ文字列も同様に変換されます。application/x-www-form-urlencoded には変換されません。
+            Assert.AreEqual(domain + "?q=Hello~,%20World!", new Uri(domain + "?q=Hello~, World!").AbsoluteUri);
         }
 
         [TestMethod]
