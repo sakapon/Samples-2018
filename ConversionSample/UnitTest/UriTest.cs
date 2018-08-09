@@ -103,7 +103,9 @@ namespace UnitTest
         {
             Console.WriteLine(SymbolChars);
 
+            // space and "%<>\^`{|}
             UrlEncodeTest(Uri.EscapeUriString);
+            // space and !"#$%&'()*+,/:;<=>?@[\]^`{|}
             UrlEncodeTest(Uri.EscapeDataString);
         }
 
@@ -112,8 +114,11 @@ namespace UnitTest
         {
             Console.WriteLine(SymbolChars);
 
+            // space and "#$%&'+,/:;<=>?@[\]^`{|}~
             UrlEncodeTest(NetWebUtility.UrlEncode);
+            // space and "#$%&'+,/:;<=>?@[\]^`{|}~
             UrlEncodeTest(s => WebHttpUtility.UrlEncode(s).ToUpperInvariant());
+            // space and !"#$%&'()*+,/:;<=>?@[\]^`{|}
             UrlEncodeTest(UriHelper.UrlEncodeForForm);
         }
 
