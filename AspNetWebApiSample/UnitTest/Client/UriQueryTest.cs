@@ -34,6 +34,7 @@ namespace UnitTest.Client
             Test(Rfc3986_ReservedChars_Uri);
             Test(Rfc3986_OtherChars_Uri);
             Test("あ");
+            Test("Hello~, World!");
         }
 
         [TestMethod]
