@@ -6,3 +6,5 @@ Sample programs, mainly used for [the blog (Do Design Space)](https://sakapon.wo
 - [ASP.NET Web API の Tips (2)](https://sakapon.wordpress.com/2018/03/24/aspnet-webapi-tips-2/)
 - [.NET Core と .NET Standard](https://sakapon.wordpress.com/2018/07/30/dotnet-core-standard/)
 - [dotnet コマンドによるビルド](https://sakapon.wordpress.com/2018/08/01/dotnet-build/)
+- [ASP.NET Core Web API の Tips](https://sakapon.wordpress.com/2018/08/06/aspnet-core-webapi-tips/)
+- [URL エンコーディング](https://sakapon.wordpress.com/2018/08/08/url-encoding/)
