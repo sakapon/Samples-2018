@@ -8,13 +8,15 @@ namespace RecordGenConsole
         public string Name { get; }
         public DateTime Birthday { get; }
         public Uri Uri { get; }
+        public System.Text.Encoding Encoding { get; }
 
-        public Person(int id, string name, DateTime birthday, Uri uri)
+        public Person(int id, string name, DateTime birthday, Uri uri, System.Text.Encoding encoding)
         {
             Id = id;
             Name = name;
             Birthday = birthday;
             Uri = uri;
+            Encoding = encoding;
         }
     }
 

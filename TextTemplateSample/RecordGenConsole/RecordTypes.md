@@ -3,6 +3,7 @@
 - string name
 - DateTime birthday
 - Uri
+- System.Text.Encoding Encoding
 
 Empty  
 Number

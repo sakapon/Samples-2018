@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace RecordGenConsole
 {
@@ -6,7 +7,7 @@ namespace RecordGenConsole
     {
         static void Main(string[] args)
         {
-            var person = new Person(4, "Shiro", DateTime.UtcNow, null);
+            var person = new Person(4, "Shiro", DateTime.UtcNow, null, Encoding.UTF8);
 
             var n = new Number(3, 2.5, DayOfWeek.Sunday);
             Console.WriteLine(n.Scaled);
