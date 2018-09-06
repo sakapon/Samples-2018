@@ -5,7 +5,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ output extension=".cs" #>
 <#
-Dictionary<string, string[][]> GetTypeDefs(string filePath)
+Dictionary<string, Dictionary<string, string>> GetTypeDefs(string filePath)
 {
     var lines = File.ReadLines(filePath)
         .Where(l => !string.IsNullOrWhiteSpace(l))
@@ -17,12 +17,12 @@ Dictionary<string, string[][]> GetTypeDefs(string filePath)
     return typeLines
         .ToDictionary(_ => _.l.Trim(), _ => GetProps(_.i));
 
-    string[][] GetProps(int i) => lines
+    Dictionary<string, string> GetProps(int i) => lines
         .Skip(i + 1)
         .TakeWhile(l => l.StartsWith("-"))
         .Select(l => l.Trim('-', ' '))
         .Select(x => x.Split())
-        .ToArray();
+        .ToDictionary(x => ToPascal(GetPropName(x)), x => x[0]);
 }
 
 string GetPropName(string[] prop) => prop[prop.Length == 1 ? 0 : 1];
@@ -35,17 +35,17 @@ using System;
 
 namespace RecordGenConsole
 {
-<# foreach (var item in types) { #>
-    public partial class <#= item.Key #>
+<# foreach (var type in types) { #>
+    public partial class <#= type.Key #>
     {
-<# foreach (var prop in item.Value) { #>
-        public <#= prop[0] #> <#= ToPascal(GetPropName(prop)) #> { get; }
+<# foreach (var prop in type.Value) { #>
+        public <#= prop.Value #> <#= prop.Key #> { get; }
 <# } #>
 
-        public <#= item.Key #>(<#= string.Join(", ", item.Value.Select(p => $"{p[0]} {ToCamel(GetPropName(p))}")) #>)
+        public <#= type.Key #>(<#= string.Join(", ", type.Value.Select(p => $"{p.Value} {ToCamel(p.Key)}")) #>)
         {
-<# foreach (var prop in item.Value) { #>
-            <#= ToPascal(GetPropName(prop)) #> = <#= ToCamel(GetPropName(prop)) #>;
+<# foreach (var prop in type.Value) { #>
+            <#= prop.Key #> = <#= ToCamel(prop.Key) #>;
 <# } #>
         }
     }
