@@ -8,13 +8,13 @@
   <ItemGroup>
     <None Update="RecordTypes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RecordTypes.txt</LastGenOutput>
+      <LastGenOutput>RecordTypes.cs</LastGenOutput>
     </None>
-    <None Update="RecordTypes.txt">
+    <Compile Update="RecordTypes.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>RecordTypes.tt</DependentUpon>
-    </None>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
