@@ -1,6 +1,33 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
 <#@ output extension=".cs" #>
+<#
+Dictionary<string, string[][]> GetTypeDefs(string filePath)
+{
+    var lines = File.ReadLines(filePath)
+        .Where(l => !string.IsNullOrWhiteSpace(l))
+        .ToArray();
+    var typeLines = lines
+        .Select((l, i) => new { l, i })
+        .Where(_ => !_.l.StartsWith("-"))
+        .ToArray();
+    return typeLines
+        .ToDictionary(_ => _.l.Trim(), _ => GetProps(_.i));
+
+    string[][] GetProps(int i) => lines
+        .Skip(i + 1)
+        .TakeWhile(l => l.StartsWith("-"))
+        .Select(l => l.Trim('-', ' '))
+        .Select(x => x.Split())
+        .ToArray();
+}
+
+string GetPropName(string[] prop) => prop[prop.Length == 1 ? 0 : 1];
+string ToPascal(string s) => char.ToUpperInvariant(s[0]) + s.Substring(1);
+string ToCamel(string s) => char.ToLowerInvariant(s[0]) + s.Substring(1);
+
+var types = GetTypeDefs(Host.ResolvePath("RecordTypes.md"));
+#>
