@@ -31,3 +31,24 @@ string ToCamel(string s) => char.ToLowerInvariant(s[0]) + s.Substring(1);
 
 var types = GetTypeDefs(Host.ResolvePath("RecordTypes.md"));
 #>
+using System;
+
+namespace RecordGenConsole
+{
+<# foreach (var item in types) { #>
+    public partial class <#= item.Key #>
+    {
+<# foreach (var prop in item.Value) { #>
+        public <#= prop[0] #> <#= ToPascal(GetPropName(prop)) #> { get; }
+<# } #>
+
+        public <#= item.Key #>(<#= string.Join(", ", item.Value.Select(p => $"{p[0]} {ToCamel(GetPropName(p))}")) #>)
+        {
+<# foreach (var prop in item.Value) { #>
+            <#= ToPascal(GetPropName(prop)) #> = <#= ToCamel(GetPropName(prop)) #>;
+<# } #>
+        }
+    }
+
+<# } #>
+}
