@@ -5,29 +5,6 @@
 <#@ import namespace="System.Linq" #>
 <#@ output extension=".cs" #>
 <#
-Dictionary<string, Dictionary<string, string>> GetTypeDefs(string filePath)
-{
-    var lines = File.ReadLines(filePath)
-        .Where(l => !string.IsNullOrWhiteSpace(l))
-        .ToArray();
-    var typeLines = lines
-        .Select((l, i) => new { l, i })
-        .Where(_ => !_.l.StartsWith("-"))
-        .ToArray();
-    return typeLines
-        .ToDictionary(_ => ToPascal(_.l.Trim()), _ => GetProps(_.i));
-
-    Dictionary<string, string> GetProps(int i) => lines
-        .Skip(i + 1)
-        .TakeWhile(l => l.StartsWith("-"))
-        .Select(l => l.Trim('-', ' ').Split())
-        .ToDictionary(p => ToPascal(GetPropName(p)), p => p[0]);
-}
-
-string GetPropName(string[] prop) => prop[prop.Length == 1 ? 0 : 1];
-string ToPascal(string s) => char.ToUpperInvariant(s[0]) + s.Substring(1);
-string ToCamel(string s) => char.ToLowerInvariant(s[0]) + s.Substring(1);
-
 var types = GetTypeDefs(Host.ResolvePath("RecordTypes.md"));
 #>
 using System;
@@ -51,3 +28,27 @@ namespace RecordGenConsole
 
 <# } #>
 }
+<#+
+Dictionary<string, Dictionary<string, string>> GetTypeDefs(string filePath)
+{
+    var lines = File.ReadLines(filePath)
+        .Where(l => !string.IsNullOrWhiteSpace(l))
+        .ToArray();
+    var typeLines = lines
+        .Select((l, i) => new { l, i })
+        .Where(_ => !_.l.StartsWith("-"))
+        .ToArray();
+    return typeLines
+        .ToDictionary(_ => ToPascal(_.l.Trim()), _ => GetProps(_.i));
+
+    Dictionary<string, string> GetProps(int i) => lines
+        .Skip(i + 1)
+        .TakeWhile(l => l.StartsWith("-"))
+        .Select(l => l.Trim('-', ' ').Split())
+        .ToDictionary(p => ToPascal(GetPropName(p)), p => p[0]);
+}
+
+string GetPropName(string[] prop) => prop[prop.Length == 1 ? 0 : 1];
+string ToPascal(string s) => char.ToUpperInvariant(s[0]) + s.Substring(1);
+string ToCamel(string s) => char.ToLowerInvariant(s[0]) + s.Substring(1);
+#>
