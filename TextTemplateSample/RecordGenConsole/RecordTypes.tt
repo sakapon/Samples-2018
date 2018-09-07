@@ -15,14 +15,13 @@ Dictionary<string, Dictionary<string, string>> GetTypeDefs(string filePath)
         .Where(_ => !_.l.StartsWith("-"))
         .ToArray();
     return typeLines
-        .ToDictionary(_ => _.l.Trim(), _ => GetProps(_.i));
+        .ToDictionary(_ => ToPascal(_.l.Trim()), _ => GetProps(_.i));
 
     Dictionary<string, string> GetProps(int i) => lines
         .Skip(i + 1)
         .TakeWhile(l => l.StartsWith("-"))
-        .Select(l => l.Trim('-', ' '))
-        .Select(x => x.Split())
-        .ToDictionary(x => ToPascal(GetPropName(x)), x => x[0]);
+        .Select(l => l.Trim('-', ' ').Split())
+        .ToDictionary(p => ToPascal(GetPropName(p)), p => p[0]);
 }
 
 string GetPropName(string[] prop) => prop[prop.Length == 1 ? 0 : 1];
