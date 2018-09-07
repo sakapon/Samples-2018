@@ -1,12 +1,12 @@
 ﻿Person
-- int id
-- string name
-- DateTime birthday
+- int Id
+- string Name
+- DateTime Birthday
 - Uri
 - System.Text.Encoding Encoding
 
-Empty  
-Number
+empty  
+number
 - int n
 - double? scale
 - DayOfWeek
