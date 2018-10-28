@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace UnitTest
@@ -47,5 +48,17 @@ namespace UnitTest
         }
 
         public static Bytes32 operator +(Bytes32 x, Bytes32 y) => new Bytes32(x.All + y.All);
+
+        public static Bytes32[] Union(byte[] bytes) => Enumerable.Range(0, bytes.Length / 4)
+            .Select(i => new Bytes32(bytes, 4 * i))
+            .ToArray();
+
+        public static byte[] Spread(Bytes32[] bytes)
+        {
+            var result = new byte[4 * bytes.Length];
+            for (var i = 0; i < bytes.Length; i++)
+                bytes[i].CopyTo(result, 4 * i);
+            return result;
+        }
     }
 }
