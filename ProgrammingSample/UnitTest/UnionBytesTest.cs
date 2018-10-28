@@ -26,24 +26,41 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void Bytes_32_Time()
+        public void Bytes_32_Time_1()
         {
-            var bytes1 = Enumerable.Range(0, 100_000_000).Select(i => (byte)i).ToArray();
-            var bytes2 = Enumerable.Range(0, 100_000_000).Select(i => (byte)(3 * i)).ToArray();
+            var bytes1 = new byte[100_000_000];
+            var bytes2 = new byte[100_000_000];
+            for (var i = 0; i < bytes1.Length; i++)
+            {
+                bytes1[i] = (byte)i;
+                bytes2[i] = (byte)(3 * i);
+            }
 
-            var sw1 = Stopwatch.StartNew();
+            var sw = Stopwatch.StartNew();
             var sum = new byte[bytes1.Length];
             for (var i = 0; i < bytes1.Length; i++)
                 sum[i] = (byte)(bytes1[i] + bytes2[i]);
-            sw1.Stop();
-            Console.WriteLine(sw1.Elapsed);
+            sw.Stop();
+            Console.WriteLine(sw.Elapsed);
+        }
 
-            var sw2 = Stopwatch.StartNew();
+        [TestMethod]
+        public void Bytes_32_Time_2()
+        {
+            var bytes1 = new byte[100_000_000];
+            var bytes2 = new byte[100_000_000];
+            for (var i = 0; i < bytes1.Length; i++)
+            {
+                bytes1[i] = (byte)i;
+                bytes2[i] = (byte)(3 * i);
+            }
+
+            var sw = Stopwatch.StartNew();
             var sum_union = new byte[bytes1.Length];
             for (var i = 0; i < bytes1.Length; i += 4)
                 (new Bytes32(bytes1, i) + new Bytes32(bytes2, i)).CopyTo(sum_union, i);
-            sw2.Stop();
-            Console.WriteLine(sw2.Elapsed);
+            sw.Stop();
+            Console.WriteLine(sw.Elapsed);
         }
     }
 }
