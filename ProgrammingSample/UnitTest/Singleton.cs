@@ -18,7 +18,7 @@ namespace UnitTest
             }
         }
 
-        Settings1() => Console.WriteLine($"{DateTime.Now:HH:mm:ss.fffffff}");
+        Settings1() => Console.WriteLine(DateTime.Now.TimeOfDay);
     }
 
     // プロパティへの初回アクセス時にインスタンスを初期化。
@@ -40,7 +40,7 @@ namespace UnitTest
             }
         }
 
-        Settings2() => Console.WriteLine($"{DateTime.Now:HH:mm:ss.fffffff}");
+        Settings2() => Console.WriteLine(DateTime.Now.TimeOfDay);
     }
 
     // クラスの初期化時にインスタンスを初期化。
@@ -51,7 +51,7 @@ namespace UnitTest
 
         static Settings3() => Default = new Settings3();
 
-        Settings3() => Console.WriteLine($"{DateTime.Now:HH:mm:ss.fffffff}");
+        Settings3() => Console.WriteLine(DateTime.Now.TimeOfDay);
     }
 
     // クラスの初期化時にインスタンスを初期化。
@@ -61,7 +61,7 @@ namespace UnitTest
     {
         public static Settings4 Default { get; } = new Settings4();
 
-        Settings4() => Console.WriteLine($"{DateTime.Now:HH:mm:ss.fffffff}");
+        Settings4() => Console.WriteLine(DateTime.Now.TimeOfDay);
     }
 
     // 静的クラス。
