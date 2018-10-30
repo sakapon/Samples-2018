@@ -44,11 +44,18 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void Singleton_5()
+        {
+            Parallel.For(0, 100, i =>
+            {
+                var o = Settings5.Default;
+            });
+        }
+
+        [TestMethod]
         public void StaticConstructor()
         {
-            var o = Settings3.Default;
-
-            var initializer = typeof(Settings3).TypeInitializer;
+            var initializer = typeof(Settings4).TypeInitializer;
 
             for (var i = 0; i < 5; i++)
                 initializer.Invoke(null, null);
