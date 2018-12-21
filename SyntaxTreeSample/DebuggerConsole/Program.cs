@@ -16,15 +16,18 @@ namespace DebuggerConsole
 
         static void Main(string[] args)
         {
+            // Generates the code for debugging.
             var sourceCode = File.ReadAllText(SourcePath);
             var generatedCode = SyntaxHelper.InsertBreakpoints(sourceCode);
             File.WriteAllText(GeneratedPath, generatedCode, Encoding.UTF8);
 
+            // Compiles and loads the assembly.
             var provider = CodeDomProvider.CreateProvider("CSharp");
             var compilerOption = new CompilerParameters(new[] { "DebuggerLib.dll" }) { GenerateExecutable = true };
             var compilerResult = provider.CompileAssemblyFromFile(compilerOption, GeneratedPath);
             if (compilerResult.Errors.HasErrors) return;
 
+            // Registers the action for breakpoints.
             DebugHelper.InfoNotified += (spanStart, spanLength, variables) =>
             {
                 Console.WriteLine(string.Join(", ", variables.Select(p => $"{p.Key}: {p.Value}")));
@@ -32,6 +35,7 @@ namespace DebuggerConsole
                 Thread.Sleep(1000);
             };
 
+            // Starts debugging.
             var entryPoint = compilerResult.CompiledAssembly.EntryPoint;
             entryPoint.Invoke(null, new object[] { new string[0] });
         }
