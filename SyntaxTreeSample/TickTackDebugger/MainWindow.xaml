@@ -36,7 +36,14 @@
                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                 IsReadOnly="True" IsReadOnlyCaretVisible="True"
                 IsInactiveSelectionHighlightEnabled="True" SelectionBrush="#FFF0F000"/>
-            <DataGrid Grid.Column="1" ItemsSource="{Binding Variables.Value}"/>
+            <DataGrid ItemsSource="{Binding Variables}" Grid.Column="1"
+                AutoGenerateColumns="False" IsReadOnly="True" RowHeaderWidth="30" SelectionUnit="CellOrRowHeader"
+                CanUserSortColumns="False" CanUserResizeRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name" Width="200"/>
+                    <DataGridTextColumn Binding="{Binding Value.Value}" Header="Value" Width="300"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Start" Width="120" Height="40" Margin="30" IsEnabled="{Binding IsReady.Value}">
