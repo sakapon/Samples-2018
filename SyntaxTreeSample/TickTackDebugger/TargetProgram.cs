@@ -3,24 +3,18 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace TickTackDebugger
 {
-    public class TargetProgram
+    public static class TargetProgram
     {
-        const string SourcePath = @"..\..\..\NumericConsole\Program.cs";
         const string GeneratedPath = @"Program.g.cs";
 
-        public string SourceCode { get; }
-        MethodInfo entryPoint;
-
-        public TargetProgram()
+        public static void StartDebugging(string sourceCode)
         {
             // Generates the code for debugging.
-            SourceCode = File.ReadAllText(SourcePath);
-            var generatedCode = SyntaxHelper.InsertBreakpoints(SourceCode);
+            var generatedCode = SyntaxHelper.InsertBreakpoints(sourceCode);
             File.WriteAllText(GeneratedPath, generatedCode, Encoding.UTF8);
 
             // Compiles and loads the assembly.
@@ -29,11 +23,8 @@ namespace TickTackDebugger
             var compilerResult = provider.CompileAssemblyFromFile(compilerOption, GeneratedPath);
             if (compilerResult.Errors.HasErrors) return;
 
-            entryPoint = compilerResult.CompiledAssembly.EntryPoint;
-        }
-
-        public void StartDebugging()
-        {
+            // Calls the Main method.
+            var entryPoint = compilerResult.CompiledAssembly.EntryPoint;
             entryPoint.Invoke(null, new object[] { new string[0] });
         }
     }

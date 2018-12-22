@@ -35,7 +35,7 @@ namespace DebuggerConsole
                 Thread.Sleep(1000);
             };
 
-            // Starts debugging.
+            // Calls the Main method.
             var entryPoint = compilerResult.CompiledAssembly.EntryPoint;
             entryPoint.Invoke(null, new object[] { new string[0] });
         }

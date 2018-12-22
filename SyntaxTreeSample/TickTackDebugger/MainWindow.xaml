@@ -32,9 +32,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="SourceCodeText" Text="{Binding TargetProgram.SourceCode, Mode=OneWay}" FontSize="18" Padding="4"
+            <TextBox x:Name="SourceCodeText" Text="{Binding SourceCode}" FontSize="18" Padding="4"
                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                IsReadOnly="True" IsReadOnlyCaretVisible="True"
+                AcceptsReturn="True" AcceptsTab="True"
                 Background="#FF222222" Foreground="#FFDDDDDD" SelectionBrush="#FFFFFF33" IsInactiveSelectionHighlightEnabled="True"/>
             <DataGrid ItemsSource="{Binding Variables}" Grid.Column="1" FontSize="18"
                 AutoGenerateColumns="False" IsReadOnly="True" RowHeaderWidth="30" SelectionUnit="CellOrRowHeader"

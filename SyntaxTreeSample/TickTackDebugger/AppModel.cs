@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DebuggerLib;
 using Reactive.Bindings;
+using TickTackDebugger.Properties;
 
 namespace TickTackDebugger
 {
     public class AppModel
     {
-        public TargetProgram TargetProgram { get; }
+        const string DefaultSourcePath = @"..\..\..\NumericConsole\Program.cs";
 
+        public string SourceCode { get; set; }
         public ReactiveProperty<(int start, int length)> CodeSpan { get; } = new ReactiveProperty<(int, int)>();
         public ReactiveCollection<Variable> Variables { get; } = new ReactiveCollection<Variable>();
 
@@ -20,7 +23,7 @@ namespace TickTackDebugger
 
         public AppModel()
         {
-            TargetProgram = new TargetProgram();
+            SourceCode = File.Exists(DefaultSourcePath) ? File.ReadAllText(DefaultSourcePath) : Resources.Program;
 
             // Registers the action for breakpoints.
             DebugHelper.InfoNotified += (spanStart, spanLength, variables) =>
@@ -34,7 +37,7 @@ namespace TickTackDebugger
         public void StartDebugging()
         {
             IsReady.Value = false;
-            Task.Run(() => TargetProgram.StartDebugging())
+            Task.Run(() => TargetProgram.StartDebugging(SourceCode))
                 .ContinueWith(_ => IsReady.Value = true);
         }
 
