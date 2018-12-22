@@ -12,9 +12,11 @@ namespace TickTackDebugger
     {
         public TargetProgram TargetProgram { get; }
 
-        public ReactiveProperty<double> ExecutionInterval { get; } = new ReactiveProperty<double>(0.5);
         public ReactiveProperty<(int start, int length)> CodeSpan { get; } = new ReactiveProperty<(int, int)>();
         public ReactiveProperty<IDictionary<string, object>> Variables { get; } = new ReactiveProperty<IDictionary<string, object>>(new Dictionary<string, object>());
+
+        public ReactiveProperty<double> ExecutionInterval { get; } = new ReactiveProperty<double>(0.5);
+        public ReactiveProperty<bool> IsReady { get; } = new ReactiveProperty<bool>(true);
 
         public AppModel()
         {
@@ -31,7 +33,9 @@ namespace TickTackDebugger
 
         public void StartDebugging()
         {
-            Task.Run(() => TargetProgram.StartDebugging());
+            IsReady.Value = false;
+            Task.Run(() => TargetProgram.StartDebugging())
+                .ContinueWith(_ => IsReady.Value = true);
         }
     }
 }

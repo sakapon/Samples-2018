@@ -39,7 +39,7 @@
             <DataGrid Grid.Column="1" ItemsSource="{Binding Variables.Value}"/>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Start" Width="120" Height="40" Margin="30">
+            <Button Content="Start" Width="120" Height="40" Margin="30" IsEnabled="{Binding IsReady.Value}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="FocusSourceCode"/>
