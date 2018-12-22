@@ -47,10 +47,11 @@ namespace TickTackDebugger
                     var v = Variables[i];
                     v.Name.Value = p.Key;
                     v.Value.Value = p.Value;
+                    v.Type.Value = p.Value?.GetType();
                 }
                 else
                 {
-                    Variables.InsertOnScheduler(i, new Variable(p.Key, p.Value));
+                    Variables.InsertOnScheduler(i, new Variable(p.Key, p.Value, p.Value?.GetType()));
                 }
             }
 
@@ -63,11 +64,13 @@ namespace TickTackDebugger
     {
         public ReactiveProperty<string> Name { get; }
         public ReactiveProperty<object> Value { get; }
+        public ReactiveProperty<Type> Type { get; }
 
-        public Variable(string name, object value)
+        public Variable(string name, object value, Type type)
         {
             Name = new ReactiveProperty<string>(name);
             Value = new ReactiveProperty<object>(value);
+            Type = new ReactiveProperty<Type>(type);
         }
     }
 }

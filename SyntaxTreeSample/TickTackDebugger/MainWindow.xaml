@@ -40,8 +40,9 @@
                 AutoGenerateColumns="False" IsReadOnly="True" RowHeaderWidth="30" SelectionUnit="CellOrRowHeader"
                 CanUserSortColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name" Width="200"/>
-                    <DataGridTextColumn Binding="{Binding Value.Value}" Header="Value" Width="300"/>
+                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name" Width="150"/>
+                    <DataGridTextColumn Binding="{Binding Value.Value}" Header="Value" Width="240"/>
+                    <DataGridTextColumn Binding="{Binding Type.Value.Name}" Header="Type" Width="150"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
