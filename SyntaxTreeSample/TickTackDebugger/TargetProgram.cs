@@ -13,13 +13,14 @@ namespace TickTackDebugger
         const string SourcePath = @"..\..\..\NumericConsole\Program.cs";
         const string GeneratedPath = @"Program.g.cs";
 
+        public string SourceCode { get; }
         MethodInfo entryPoint;
 
-        public void Initialize()
+        public TargetProgram()
         {
             // Generates the code for debugging.
-            var sourceCode = File.ReadAllText(SourcePath);
-            var generatedCode = SyntaxHelper.InsertBreakpoints(sourceCode);
+            SourceCode = File.ReadAllText(SourcePath);
+            var generatedCode = SyntaxHelper.InsertBreakpoints(SourceCode);
             File.WriteAllText(GeneratedPath, generatedCode, Encoding.UTF8);
 
             // Compiles and loads the assembly.
