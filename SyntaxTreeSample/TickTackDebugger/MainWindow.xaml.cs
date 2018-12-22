@@ -31,5 +31,10 @@ namespace TickTackDebugger
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(x => SourceCodeText.Select(x.start, x.length));
         }
+
+        public void FocusSourceCode()
+        {
+            SourceCodeText.Focus();
+        }
     }
 }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TickTackDebugger"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        x:Name="window"
         x:Class="TickTackDebugger.MainWindow"
         mc:Ignorable="d"
         Title="Tick-tack Debugger" Height="800" Width="1200" FontFamily="Consolas" FontSize="24">
@@ -33,6 +34,7 @@
             <Button Content="Start" Width="120" Height="40">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
+                        <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="FocusSourceCode"/>
                         <ei:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="StartDebugging"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
