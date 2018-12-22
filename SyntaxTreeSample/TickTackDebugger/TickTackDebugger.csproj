@@ -259,6 +259,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <None Include="Resources\Program.cs" />
     <Compile Include="SyntaxHelper.cs" />
     <Compile Include="TargetProgram.cs" />
     <Page Include="MainWindow.xaml">
