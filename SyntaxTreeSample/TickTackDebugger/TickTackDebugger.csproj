@@ -121,5 +121,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DebuggerLib\DebuggerLib.csproj">
+      <Project>{a4e86c72-69a7-45d9-96ec-00bb9248e51e}</Project>
+      <Name>DebuggerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
