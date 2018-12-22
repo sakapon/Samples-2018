@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         x:Class="TickTackDebugger.MainWindow"
         mc:Ignorable="d"
-        Title="Tick-tack Debugger" Height="800" Width="1200" FontSize="24">
+        Title="Tick-tack Debugger" Height="800" Width="1200" FontFamily="Consolas" FontSize="24">
     <Window.DataContext>
         <local:AppModel/>
     </Window.DataContext>
@@ -21,6 +21,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBox x:Name="SourceCodeText" Text="{Binding TargetProgram.SourceCode, Mode=OneWay}"
+                VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                IsReadOnly="True" IsReadOnlyCaretVisible="True"
+                IsInactiveSelectionHighlightEnabled="True" SelectionBrush="#FFF0F000"/>
             <ScrollViewer Grid.Column="1">
                 <ItemsControl ItemsSource="{Binding Variables.Value}"/>
             </ScrollViewer>
