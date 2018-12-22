@@ -36,9 +36,7 @@
                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                 IsReadOnly="True" IsReadOnlyCaretVisible="True"
                 IsInactiveSelectionHighlightEnabled="True" SelectionBrush="#FFF0F000"/>
-            <ScrollViewer Grid.Column="1">
-                <ItemsControl ItemsSource="{Binding Variables.Value}"/>
-            </ScrollViewer>
+            <DataGrid Grid.Column="1" ItemsSource="{Binding Variables.Value}"/>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Start" Width="120" Height="40" Margin="30">
