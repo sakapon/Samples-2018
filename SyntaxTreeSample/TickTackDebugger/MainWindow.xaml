@@ -8,7 +8,7 @@
         x:Name="window"
         x:Class="TickTackDebugger.MainWindow"
         mc:Ignorable="d"
-        Title="Tick-tack Debugger" Height="800" Width="1200" FontFamily="Consolas" FontSize="24">
+        Title="Tick-tack Debugger" Height="800" Width="1200" FontFamily="Consolas" FontSize="20">
     <Window.Resources>
         <Style x:Key="SliderStyle" TargetType="{x:Type Slider}">
             <Setter Property="Margin" Value="0,10,0,10"/>
@@ -32,11 +32,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="SourceCodeText" Text="{Binding TargetProgram.SourceCode, Mode=OneWay}"
+            <TextBox x:Name="SourceCodeText" Text="{Binding TargetProgram.SourceCode, Mode=OneWay}" FontSize="18" Padding="4"
                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                 IsReadOnly="True" IsReadOnlyCaretVisible="True"
-                IsInactiveSelectionHighlightEnabled="True" SelectionBrush="#FFF0F000"/>
-            <DataGrid ItemsSource="{Binding Variables}" Grid.Column="1"
+                Background="#FF222222" Foreground="#FFDDDDDD" SelectionBrush="#FFFFFF33" IsInactiveSelectionHighlightEnabled="True"/>
+            <DataGrid ItemsSource="{Binding Variables}" Grid.Column="1" FontSize="18"
                 AutoGenerateColumns="False" IsReadOnly="True" RowHeaderWidth="30" SelectionUnit="CellOrRowHeader"
                 CanUserSortColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
@@ -46,7 +46,7 @@
             </DataGrid>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Start" Width="120" Height="40" Margin="30" IsEnabled="{Binding IsReady.Value}">
+            <Button Content="Start" Width="120" Height="40" Margin="24" IsEnabled="{Binding IsReady.Value}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="FocusSourceCode"/>
@@ -54,7 +54,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Grid Width="450" Margin="30">
+            <Grid Width="450" Margin="24">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
