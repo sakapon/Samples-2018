@@ -9,6 +9,16 @@
         x:Class="TickTackDebugger.MainWindow"
         mc:Ignorable="d"
         Title="Tick-tack Debugger" Height="800" Width="1200" FontFamily="Consolas" FontSize="24">
+    <Window.Resources>
+        <Style x:Key="SliderStyle" TargetType="{x:Type Slider}">
+            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="IsMoveToPointEnabled" Value="True"/>
+            <Setter Property="Maximum" Value="3"/>
+            <Setter Property="Minimum" Value="0.03"/>
+            <Setter Property="LargeChange" Value="0.1"/>
+            <Setter Property="SmallChange" Value="0.01"/>
+        </Style>
+    </Window.Resources>
     <Window.DataContext>
         <local:AppModel/>
     </Window.DataContext>
@@ -30,8 +40,8 @@
                 <ItemsControl ItemsSource="{Binding Variables.Value}"/>
             </ScrollViewer>
         </Grid>
-        <StackPanel Grid.Row="1" Margin="20">
-            <Button Content="Start" Width="120" Height="40">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Start" Width="120" Height="40" Margin="30">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="FocusSourceCode"/>
@@ -39,6 +49,15 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
+            <Grid Width="450" Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Interval:"/>
+                <TextBlock Text="{Binding ExecutionInterval.Value, StringFormat=\{0:F2\} s}" HorizontalAlignment="Right"/>
+                <Slider Value="{Binding ExecutionInterval.Value}" Style="{DynamicResource SliderStyle}" Grid.Row="1"/>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>
