@@ -21,11 +21,17 @@ namespace TickTackDebugger
             var provider = CodeDomProvider.CreateProvider("CSharp");
             var compilerOption = new CompilerParameters(new[] { "System.Core.dll", "DebuggerLib.dll" }) { GenerateExecutable = true };
             var compilerResult = provider.CompileAssemblyFromFile(compilerOption, GeneratedPath);
-            if (compilerResult.Errors.HasErrors) return;
+            if (compilerResult.Errors.HasErrors) throw new FormatException(ToMessage(compilerResult.Errors[0]));
 
             // Calls the Main method.
             var entryPoint = compilerResult.CompiledAssembly.EntryPoint;
-            entryPoint.Invoke(null, new object[] { new string[0] });
+            var parameters = entryPoint.GetParameters();
+            if (parameters.Length == 0)
+                entryPoint.Invoke(null, null);
+            else
+                entryPoint.Invoke(null, new object[] { new string[0] });
         }
+
+        static string ToMessage(CompilerError error) => $"{error.ErrorNumber}: {error.ErrorText}";
     }
 }

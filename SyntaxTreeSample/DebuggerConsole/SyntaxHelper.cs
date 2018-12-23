@@ -17,7 +17,8 @@ namespace DebuggerConsole
 
             var method = root.DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
-                .First(m => m.Identifier.ValueText == "Main");
+                .FirstOrDefault(m => m.Identifier.ValueText == "Main")
+                ?? throw new FormatException("The Main method is not found.");
             var statements = DetectStatements(method);
 
             var result = sourceCode;
@@ -34,7 +35,7 @@ namespace DebuggerConsole
         {
             var tree = CSharpSyntaxTree.ParseText(text);
             var diagnostics = tree.GetDiagnostics().ToArray();
-            if (diagnostics.Length > 0) return null;
+            if (diagnostics.Length > 0) throw new FormatException(diagnostics[0].ToString());
 
             return tree.GetCompilationUnitRoot();
         }
