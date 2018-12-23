@@ -36,7 +36,7 @@
                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                 AcceptsReturn="True" AcceptsTab="True"
                 Background="#FF222222" Foreground="#FFDDDDDD" SelectionBrush="#FFFFFF33" IsInactiveSelectionHighlightEnabled="True"/>
-            <TextBlock Text="{Binding ErrorMessage.Value}" Grid.Row="1" Background="#FF333333" Foreground="#FFEE1111" FontSize="18" TextWrapping="Wrap" Padding="12,8"/>
+            <TextBlock Text="{Binding ErrorMessage.Value}" Grid.Row="1" Background="#FF333333" Foreground="#FFFF3333" FontSize="18" TextWrapping="Wrap" Padding="12"/>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
