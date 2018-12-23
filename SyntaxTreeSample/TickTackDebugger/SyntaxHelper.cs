@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using DebugStatement = System.ValueTuple<Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax, string[]>;
 
-namespace DebuggerConsole
+namespace TickTackDebugger
 {
     public static class SyntaxHelper
     {
