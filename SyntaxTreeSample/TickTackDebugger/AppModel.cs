@@ -41,24 +41,24 @@ namespace TickTackDebugger
                 .ContinueWith(_ => IsReady.Value = true);
         }
 
-        void UpdateVariables(IDictionary<string, object> variables)
+        void UpdateVariables(Var[] variables)
         {
             foreach (var (p, i) in variables.Select((p, i) => (p, i)))
             {
                 if (i < Variables.Count)
                 {
                     var v = Variables[i];
-                    v.Name.Value = p.Key;
+                    v.Name.Value = p.Name;
                     v.Value.Value = p.Value;
                     v.Type.Value = p.Value?.GetType();
                 }
                 else
                 {
-                    Variables.InsertOnScheduler(i, new Variable(p.Key, p.Value, p.Value?.GetType()));
+                    Variables.InsertOnScheduler(i, new Variable(p.Name, p.Value, p.Value?.GetType()));
                 }
             }
 
-            for (var i = Variables.Count - 1; i >= variables.Count; i--)
+            for (var i = Variables.Count - 1; i >= variables.Length; i--)
                 Variables.RemoveAtOnScheduler(i);
         }
     }

@@ -30,7 +30,7 @@ namespace DebuggerConsole
             // Registers the action for breakpoints.
             DebugHelper.InfoNotified += (spanStart, spanLength, variables) =>
             {
-                Console.WriteLine(string.Join(", ", variables.Select(p => $"{p.Key}: {p.Value}")));
+                Console.WriteLine(string.Join(", ", variables.Select(v => $"{v.Name}: {v.Value}")));
                 Console.WriteLine(sourceCode.Substring(spanStart, spanLength));
                 Thread.Sleep(1000);
             };

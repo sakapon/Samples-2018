@@ -24,9 +24,10 @@ namespace DebuggerConsole
             foreach (var (statement, variables) in statements.Reverse())
             {
                 var (span, debugIndex) = GetSpan(statement);
-                result = result.Insert(debugIndex, $"DebuggerLib.DebugHelper.NotifyInfo({span.Start}, {span.Length}, {ToDictionaryText(variables)});\r\n");
+                result = result.Insert(debugIndex, $"DebugHelper.NotifyInfo({span.Start}, {span.Length}{ToParamsArrayText(variables)});\r\n");
             }
-            return result;
+
+            return result.Insert(root.Usings.FullSpan.End, "using DebuggerLib;\r\n");
         }
 
         public static CompilationUnitSyntax ParseText(string text)
@@ -94,6 +95,9 @@ namespace DebuggerConsole
                     return (statement.Span, statement.FullSpan.Start);
             }
         }
+
+        static string ToParamsArrayText(string[] variables) =>
+            string.Concat(variables.Select(v => $", new Var(\"{v}\", {v})"));
 
         static string ToDictionaryText(string[] variables) =>
             $"new Dictionary<string, object> {{ {string.Join(", ", variables.Select(v => $"{{ \"{v}\", {v} }}"))} }}";
