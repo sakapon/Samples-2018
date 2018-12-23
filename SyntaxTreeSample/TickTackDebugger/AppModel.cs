@@ -45,16 +45,10 @@ namespace TickTackDebugger
         {
             var commonLength = Math.Min(Variables.Count, variables.Length);
             for (var i = 0; i < commonLength; i++)
-            {
-                var _v = Variables[i];
-                var v = variables[i];
-                _v.Name.Value = v.Name;
-                _v.Value.Value = v.Value;
-                _v.Type.Value = v.Value?.GetType();
-            }
+                Variables[i].SetValues(variables[i]);
 
-            for (var i = Variables.Count; i < variables.Length; i++)
-                Variables.InsertOnScheduler(i, new Variable(variables[i]));
+            if (Variables.Count < variables.Length)
+                Variables.AddRangeOnScheduler(variables.Skip(Variables.Count).Select(v => new Variable(v)));
 
             for (var i = Variables.Count - 1; i >= variables.Length; i--)
                 Variables.RemoveAtOnScheduler(i);
@@ -75,5 +69,12 @@ namespace TickTackDebugger
         }
 
         public Variable(Var v) : this(v.Name, v.Value, v.Value?.GetType()) { }
+
+        public void SetValues(Var v)
+        {
+            Name.Value = v.Name;
+            Value.Value = v.Value;
+            Type.Value = v.Value?.GetType();
+        }
     }
 }
