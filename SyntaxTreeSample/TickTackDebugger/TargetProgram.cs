@@ -19,7 +19,7 @@ namespace TickTackDebugger
 
             // Compiles and loads the assembly.
             var provider = CodeDomProvider.CreateProvider("CSharp");
-            var compilerOption = new CompilerParameters(new[] { "DebuggerLib.dll" }) { GenerateExecutable = true };
+            var compilerOption = new CompilerParameters(new[] { "System.Core.dll", "DebuggerLib.dll" }) { GenerateExecutable = true };
             var compilerResult = provider.CompileAssemblyFromFile(compilerOption, GeneratedPath);
             if (compilerResult.Errors.HasErrors) return;
 
