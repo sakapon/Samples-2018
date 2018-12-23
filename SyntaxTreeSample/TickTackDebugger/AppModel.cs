@@ -43,20 +43,18 @@ namespace TickTackDebugger
 
         void UpdateVariables(Var[] variables)
         {
-            foreach (var (p, i) in variables.Select((p, i) => (p, i)))
+            var commonLength = Math.Min(Variables.Count, variables.Length);
+            for (var i = 0; i < commonLength; i++)
             {
-                if (i < Variables.Count)
-                {
-                    var v = Variables[i];
-                    v.Name.Value = p.Name;
-                    v.Value.Value = p.Value;
-                    v.Type.Value = p.Value?.GetType();
-                }
-                else
-                {
-                    Variables.InsertOnScheduler(i, new Variable(p.Name, p.Value, p.Value?.GetType()));
-                }
+                var _v = Variables[i];
+                var v = variables[i];
+                _v.Name.Value = v.Name;
+                _v.Value.Value = v.Value;
+                _v.Type.Value = v.Value?.GetType();
             }
+
+            for (var i = Variables.Count; i < variables.Length; i++)
+                Variables.InsertOnScheduler(i, new Variable(variables[i]));
 
             for (var i = Variables.Count - 1; i >= variables.Length; i--)
                 Variables.RemoveAtOnScheduler(i);
@@ -75,5 +73,7 @@ namespace TickTackDebugger
             Value = new ReactiveProperty<object>(value);
             Type = new ReactiveProperty<Type>(type);
         }
+
+        public Variable(Var v) : this(v.Name, v.Value, v.Value?.GetType()) { }
     }
 }
