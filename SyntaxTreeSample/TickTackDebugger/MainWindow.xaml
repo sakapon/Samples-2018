@@ -23,20 +23,27 @@
         <local:AppModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <TextBox x:Name="SourceCodeText" Text="{Binding SourceCode}" FontSize="18" Padding="4"
                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                 AcceptsReturn="True" AcceptsTab="True"
                 Background="#FF222222" Foreground="#FFDDDDDD" SelectionBrush="#FFFFFF33" IsInactiveSelectionHighlightEnabled="True"/>
-            <DataGrid ItemsSource="{Binding Variables}" Grid.Column="1" FontSize="18"
+            <TextBlock Text="{Binding ErrorMessage.Value}" Grid.Row="1" Background="#FF333333" Foreground="#FFEE1111" FontSize="18" TextWrapping="Wrap" Padding="12,8"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid ItemsSource="{Binding Variables}" FontSize="18"
                 AutoGenerateColumns="False" IsReadOnly="True" RowHeaderWidth="30" SelectionUnit="CellOrRowHeader"
                 CanUserSortColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
@@ -45,25 +52,25 @@
                     <DataGridTextColumn Binding="{Binding Type.Value.Name}" Header="Type" Width="150"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <StackPanel HorizontalAlignment="Center" Grid.Row="1" Margin="10">
+                <Grid Width="450" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Interval:"/>
+                    <TextBlock Text="{Binding ExecutionInterval.Value, StringFormat=\{0:F2\} s}" HorizontalAlignment="Right"/>
+                    <Slider Value="{Binding ExecutionInterval.Value}" Style="{DynamicResource SliderStyle}" Grid.Row="1"/>
+                </Grid>
+                <Button Content="Start" Width="120" Height="40" Margin="10" IsEnabled="{Binding IsReady.Value}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="FocusSourceCode"/>
+                            <ei:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="StartDebugging"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Start" Width="120" Height="40" Margin="24" IsEnabled="{Binding IsReady.Value}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="FocusSourceCode"/>
-                        <ei:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="StartDebugging"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Grid Width="450" Margin="24">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="Interval:"/>
-                <TextBlock Text="{Binding ExecutionInterval.Value, StringFormat=\{0:F2\} s}" HorizontalAlignment="Right"/>
-                <Slider Value="{Binding ExecutionInterval.Value}" Style="{DynamicResource SliderStyle}" Grid.Row="1"/>
-            </Grid>
-        </StackPanel>
     </Grid>
 </Window>
