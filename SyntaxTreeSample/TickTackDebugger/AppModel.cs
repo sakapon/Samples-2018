@@ -19,7 +19,7 @@ namespace TickTackDebugger
         public ReactiveCollection<Variable> Variables { get; } = new ReactiveCollection<Variable>();
         public ReactiveProperty<string> ErrorMessage { get; } = new ReactiveProperty<string>("");
 
-        public ReactiveProperty<double> ExecutionInterval { get; } = new ReactiveProperty<double>(0.5);
+        public ReactiveProperty<double> ExecutionInterval { get; } = new ReactiveProperty<double>(1.0);
         public ReactiveProperty<bool> IsReady { get; } = new ReactiveProperty<bool>(true);
 
         public AppModel()
