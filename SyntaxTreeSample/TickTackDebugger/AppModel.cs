@@ -17,6 +17,7 @@ namespace TickTackDebugger
         public string SourceCode { get; set; }
         public ReactiveProperty<(int start, int length)> CodeSpan { get; } = new ReactiveProperty<(int, int)>();
         public ReactiveCollection<Variable> Variables { get; } = new ReactiveCollection<Variable>();
+        public ReactiveProperty<string> ErrorMessage { get; } = new ReactiveProperty<string>("");
 
         public ReactiveProperty<double> ExecutionInterval { get; } = new ReactiveProperty<double>(0.5);
         public ReactiveProperty<bool> IsReady { get; } = new ReactiveProperty<bool>(true);
@@ -36,9 +37,22 @@ namespace TickTackDebugger
 
         public void StartDebugging()
         {
+            Variables.Clear();
+            ErrorMessage.Value = "";
             IsReady.Value = false;
-            Task.Run(() => TargetProgram.StartDebugging(SourceCode))
-                .ContinueWith(_ => IsReady.Value = true);
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    TargetProgram.StartDebugging(SourceCode);
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage.Value = ex.Message;
+                }
+            })
+            .ContinueWith(_ => IsReady.Value = true);
         }
 
         void UpdateVariables(Var[] variables)
