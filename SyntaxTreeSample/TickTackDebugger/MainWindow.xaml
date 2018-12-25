@@ -27,7 +27,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid Margin="0,0,4,0">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
@@ -38,7 +38,7 @@
                 Background="#FF222222" Foreground="#FFDDDDDD" SelectionBrush="#FFFFFF33" IsInactiveSelectionHighlightEnabled="True"/>
             <TextBlock Text="{Binding ErrorMessage.Value}" Grid.Row="1" Background="#FF333333" Foreground="#FFFF3333" FontSize="18" TextWrapping="Wrap" Padding="12"/>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Margin="4,0,0,0" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
@@ -52,8 +52,8 @@
                     <DataGridTextColumn Binding="{Binding Type.Value.Name}" Header="Type" Width="150"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <StackPanel HorizontalAlignment="Center" Grid.Row="1" Margin="10">
-                <Grid Width="450" Margin="10">
+            <StackPanel Grid.Row="1" Margin="10">
+                <Grid MinWidth="180" MaxWidth="450" Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -72,5 +72,6 @@
                 </Button>
             </StackPanel>
         </Grid>
+        <GridSplitter Background="#FF333333" BorderBrush="#FF666666" Width="8" BorderThickness="1,0" Margin="0,0,-4,0"/>
     </Grid>
 </Window>
