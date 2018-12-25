@@ -52,8 +52,8 @@
                     <DataGridTextColumn Binding="{Binding Type.Value.Name}" Header="Type" Width="150"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <StackPanel HorizontalAlignment="Center" Grid.Row="1" Margin="10">
-                <Grid Width="450" Margin="10">
+            <StackPanel Grid.Row="1" Margin="10">
+                <Grid MinWidth="180" MaxWidth="450" Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
